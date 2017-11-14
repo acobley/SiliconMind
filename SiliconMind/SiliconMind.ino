@@ -58,29 +58,28 @@ void loop() {
     digitalWrite(Out[i], true);
     for (int j = 0; j < 5; j++) {
       int in = digitalRead(In[j]);
-      if (in == 1) {
+      if (in == 1) {  // Ifa ny key is pressed set the gate out to true and set a flag (State)
         State = true;
         digitalWrite(GateOut, true); // this only works in monophonic mode
       }
       Key = 8 * j + i;
-      if ((in != 0) && (Key != Gate[0])) {
-        Gate[0] = Key;
+      if ((in != 0) &&    //A key is pressed
+          (Key != Gate[0]) &&  //It's not equal to the current key (we only need to write out once)
+          (Gate[0]==-1)) {    //No other key has been pressed before.
+        Gate[0] = Key;       //Record this Key
         Octave = (byte)(Key / 12);
         Note = (byte)(Key % 12);
-        //outValue = Range * (Octave + keyVolts[Note]);  //This is not correct ?
-        outValue = Range * (Octave + (float)Note/12);  //This is not correct ?
+ 
+        outValue = Range * (Octave + (float)Note/12);  
 
-        mcpWrite(outValue);
-        //Serial.print(Octave);
-        //Serial.print("   ");
-        
-        //Serial.println(Key);
+        mcpWrite(outValue);  //Send the value to the  DAC
       }
     }
     digitalWrite(Out[i], false);
   }
-  if (State == false) {
-    digitalWrite(GateOut, false); // this only works in monophonic mode
+  if (State == false) {  //No Key was pressed this time round
+    Gate[0]=-1;          //Set the Gate to a default value
+    digitalWrite(GateOut, false); 
   }
 }
 
