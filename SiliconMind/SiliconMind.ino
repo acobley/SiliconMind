@@ -53,36 +53,33 @@ void setup() {
 
 void loop() {
   int CurrentFinger = 0;
-  for (int i = 0; i < CurrentPoly; i++) {
-    States[i] = false;
 
+  for (int i = 0; i < MaxPoly; i++) {
+    States[i] = false;
   }
   for (int i = 0; i < 8; i++) {
     digitalWrite(ScanOut[i], true);
     for (int j = 0; j < 5; j++) {
       int in = digitalRead(ScanIn[j]);
-      Key = 8 * j + i;
-      if (mode == SPLIT) {
-        if (Key < 12) {
-          CurrentFinger = 1;
-        }
-        else
-          CurrentFinger = 0;
-      }
-
-      if (in == 1) {  // If any key is pressed set the gate out to true and set a flag (State)
-        States[CurrentFinger] = true;
-        digitalWrite(GateOut[CurrentFinger], true);
-      }
-
-      if ((in != 0) &&    //A key is pressed
-          (Key != KeyPressed[CurrentFinger]) ) { //It's not equal to the current key (we only need to write out once)
-
-        KeyPressed[CurrentFinger] = Key;       //Record this Key
-        if (mode == POLY) {
-          CurrentFinger++;
-          if (CurrentFinger >= CurrentPoly)
-            CurrentFinger = CurrentPoly;
+      Key = (8 * j) + i;
+      if ((in == 1)  ) {
+        if (CurrentFinger < CurrentPoly) { // We are out of polyphony if CurrentFinger =CurrentPoly
+          if (KeyPressed[CurrentFinger] == -1) {
+            States[CurrentFinger] = true;
+            KeyPressed[CurrentFinger] = Key;       //Record this Key
+            if (mode == SPLIT) {
+              if (Key < 12) {
+                CurrentFinger = 1;
+              }
+              else
+                CurrentFinger = 0;
+            }
+            if (mode == POLY) {
+              CurrentFinger++;
+              if (CurrentFinger >= CurrentPoly)
+                CurrentFinger = CurrentPoly;
+            }
+          }
         }
 
       }
@@ -93,9 +90,10 @@ void loop() {
   for (int i = 0; i < CurrentPoly; i++) {
     CurrentFinger = i;
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round
-      KeyPressed[CurrentFinger] = -1;        //Set the Gate to a default value
+      KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
       digitalWrite(GateOut[CurrentFinger], false);
     } else {
+      digitalWrite(GateOut[CurrentFinger], true);
       Key = KeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
