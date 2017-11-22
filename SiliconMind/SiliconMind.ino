@@ -52,41 +52,69 @@ void setup() {
 }
 
 void loop() {
-  int CurrentFinger = 0;
-
+  int CurrentFinger = -1;
+  int CurrentKeys [2 * MaxPoly];
+  int ScanCount = 0;
+  int SortedKeys[MaxPoly];
   for (int i = 0; i < MaxPoly; i++) {
     States[i] = false;
+  }
+  for (int i = 0; i < 2 * MaxPoly; i++) {
+    CurrentKeys[i] = -1;;
   }
   for (int i = 0; i < 8; i++) {
     digitalWrite(ScanOut[i], true);
     for (int j = 0; j < 5; j++) {
       int in = digitalRead(ScanIn[j]);
-      Key = (8 * j) + i;
-      if ((in == 1)  ) {
-        if (CurrentFinger < CurrentPoly) { // We are out of polyphony if CurrentFinger =CurrentPoly
-          if (KeyPressed[CurrentFinger] == -1) {
-            States[CurrentFinger] = true;
-            KeyPressed[CurrentFinger] = Key;       //Record this Key
-            if (mode == SPLIT) {
-              if (Key < 12) {
-                CurrentFinger = 1;
-              }
-              else
-                CurrentFinger = 0;
+      if (in == 1)   {
+        Key = (8 * j) + i;
+        CurrentKeys[ScanCount] = Key;
+        ScanCount ++;
+        if (ScanCount >= 2 * MaxPoly)
+          ScanCount = 2 * MaxPoly;
+        for (int l = 0; l < 4; l++) {
+          if (Key > SortedKeys[l]) {
+            if (SortedKeys[l] == -1) {
+              SortedKeys[l] = Key;
+              l = 4;
             }
-            if (mode == POLY) {
-              CurrentFinger++;
-              if (CurrentFinger >= CurrentPoly)
-                CurrentFinger = CurrentPoly;
+          } else {
+            //Insert it by moving everything up one
+            for (int m = 2; m >= l; m--) {
+              SortedKeys[m + 1] = SortedKeys[m];
             }
+            SortedKeys[l] = Key;
+            l = 4;
           }
+
         }
-
       }
-
     }
     digitalWrite(ScanOut[i], false);
   }
+
+  for (int i = 0; i < 2 * MaxPoly; i++) {
+
+    Key = CurrentKeys[i];
+    //check to see if it's currently assigned
+    boolean inUse = false;
+    for (int k = 0; k < CurrentPoly; k++) {
+      if (Key == KeyPressed[k])
+        inUse = true;
+    }
+    if (inUse == false) {
+      //find a free voice
+      for (int k = 0; k < CurrentPoly; k++) {
+        if (KeyPressed[k] == -1) {
+          CurrentFinger = k;
+          States[CurrentFinger] = true;
+          KeyPressed[CurrentFinger] = Key;       //Record this Key
+          k = CurrentPoly; //Skip the rest
+        }
+      }
+    }
+  }
+
   for (int i = 0; i < CurrentPoly; i++) {
     CurrentFinger = i;
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round
