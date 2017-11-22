@@ -10,12 +10,13 @@ int ScanOut[8] = {2, 3, 4, 5, 6, 7, 8, 9};
 int ScanIn[5] = {A0, A1, A2, A3, A4};
 int DACS[2] = {10, A5};
 
+
 int Range = 819; // (2^12/5)
 int Vss = 5;
 
 int KeyPressed[MaxPoly];
 
-byte Key = -1;
+
 byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
@@ -25,7 +26,7 @@ boolean States[MaxPoly];
 int GateOut[MaxPoly] = {0, 1};
 
 void setup() {
-  //Serial.begin(9600);
+
   for (int i = 0; i < 8; i++) {
     pinMode(ScanOut[i], OUTPUT);
     digitalWrite(ScanOut[i], false);
@@ -52,39 +53,35 @@ void setup() {
 }
 
 void loop() {
-  int CurrentFinger = -1;
-  int CurrentKeys [2 * MaxPoly];
-  int ScanCount = 0;
-  int SortedKeys[MaxPoly];
-  for (int i = 0; i < MaxPoly; i++) {
+  
+  
+  int CurrentKeys [MaxPoly];
+
+  for (int i = 0; i < MaxPoly; i++) {  //reset scan
     States[i] = false;
+    CurrentKeys[i] = -1;
   }
-  for (int i = 0; i < 2 * MaxPoly; i++) {
-    CurrentKeys[i] = -1;;
-  }
-  for (int i = 0; i < 8; i++) {
+  byte Key = -1;
+  for (int i = 0; i < 8; i++) { //scan keyboard and order them low to high
     digitalWrite(ScanOut[i], true);
     for (int j = 0; j < 5; j++) {
       int in = digitalRead(ScanIn[j]);
       if (in == 1)   {
         Key = (8 * j) + i;
-        CurrentKeys[ScanCount] = Key;
-        ScanCount ++;
-        if (ScanCount >= 2 * MaxPoly)
-          ScanCount = 2 * MaxPoly;
-        for (int l = 0; l < 4; l++) {
-          if (Key > SortedKeys[l]) {
-            if (SortedKeys[l] == -1) {
-              SortedKeys[l] = Key;
-              l = 4;
+
+        for (int l = 0; l < MaxPoly; l++) {//
+          if (Key > CurrentKeys[l]) {
+            if (CurrentKeys[l] == -1) {
+              CurrentKeys[l] = Key;
+              l = MaxPoly;
             }
           } else {
             //Insert it by moving everything up one
-            for (int m = 2; m >= l; m--) {
-              SortedKeys[m + 1] = SortedKeys[m];
+            for (int m = (MaxPoly-2); m >= l; m--) {
+              CurrentKeys[m + 1] = CurrentKeys[m];
             }
-            SortedKeys[l] = Key;
-            l = 4;
+            CurrentKeys[l] = Key;
+            l = MaxPoly;
           }
 
         }
@@ -92,30 +89,33 @@ void loop() {
     }
     digitalWrite(ScanOut[i], false);
   }
-
-  for (int i = 0; i < 2 * MaxPoly; i++) {
-
+   int CurrentFinger = -1;
+ 
+ 
+  for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = CurrentKeys[i];
-    //check to see if it's currently assigned
-    boolean inUse = false;
-    for (int k = 0; k < CurrentPoly; k++) {
-      if (Key == KeyPressed[k])
-        inUse = true;
-    }
-    if (inUse == false) {
-      //find a free voice
+    if (Key != -1) {
+      //check to see if it's currently assigned
+      boolean inUse = false;
       for (int k = 0; k < CurrentPoly; k++) {
-        if (KeyPressed[k] == -1) {
-          CurrentFinger = k;
-          States[CurrentFinger] = true;
-          KeyPressed[CurrentFinger] = Key;       //Record this Key
-          k = CurrentPoly; //Skip the rest
+        if (Key == KeyPressed[k])
+          inUse = true;
+      }
+      if (inUse == false) {
+        //find a free voice
+        for (int k = 0; k < CurrentPoly; k++) {
+          if (KeyPressed[k] == -1) {
+            CurrentFinger = k;
+            States[CurrentFinger] = true;
+            KeyPressed[CurrentFinger] = Key;       //Record this Key
+            k = CurrentPoly; //Skip the rest
+          }
         }
       }
     }
   }
 
-  for (int i = 0; i < CurrentPoly; i++) {
+  for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
     CurrentFinger = i;
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round
       KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
