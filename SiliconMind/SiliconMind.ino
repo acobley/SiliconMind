@@ -26,7 +26,7 @@ boolean States[MaxPoly];
 int GateOut[MaxPoly] = {0, 1};
 
 void setup() {
-
+ 
   for (int i = 0; i < 8; i++) {
     pinMode(ScanOut[i], OUTPUT);
     digitalWrite(ScanOut[i], false);
@@ -50,18 +50,19 @@ void setup() {
     CurrentPoly = MaxPoly;
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
+  delay(500);
 }
 
 void loop() {
-  
-  
+
+
   int CurrentKeys [MaxPoly];
 
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
     States[i] = false;
     CurrentKeys[i] = -1;
   }
-  byte Key = -1;
+  int Key = -1;
   for (int i = 0; i < 8; i++) { //scan keyboard and order them low to high
     digitalWrite(ScanOut[i], true);
     for (int j = 0; j < 5; j++) {
@@ -77,7 +78,7 @@ void loop() {
             }
           } else {
             //Insert it by moving everything up one
-            for (int m = (MaxPoly-2); m >= l; m--) {
+            for (int m = (MaxPoly - 2); m >= l; m--) {
               CurrentKeys[m + 1] = CurrentKeys[m];
             }
             CurrentKeys[l] = Key;
@@ -89,34 +90,27 @@ void loop() {
     }
     digitalWrite(ScanOut[i], false);
   }
-   int CurrentFinger = -1;
- 
- 
+  int CurrentFinger = 0;
+
+  
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
+    
     Key = CurrentKeys[i];
+  
     if (Key != -1) {
-      //check to see if it's currently assigned
-      boolean inUse = false;
-      for (int k = 0; k < CurrentPoly; k++) {
-        if (Key == KeyPressed[k])
-          inUse = true;
-      }
-      if (inUse == false) {
-        //find a free voice
-        for (int k = 0; k < CurrentPoly; k++) {
-          if (KeyPressed[k] == -1) {
-            CurrentFinger = k;
-            States[CurrentFinger] = true;
-            KeyPressed[CurrentFinger] = Key;       //Record this Key
-            k = CurrentPoly; //Skip the rest
-          }
-        }
-      }
+
+      
+      States[CurrentFinger] = true;
+      KeyPressed[CurrentFinger] = Key;       //Record this Key
+      CurrentFinger++;
+
     }
   }
 
+  
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
     CurrentFinger = i;
+     Serial.println(States[CurrentFinger] );
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round
       KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
       digitalWrite(GateOut[CurrentFinger], false);
@@ -129,6 +123,7 @@ void loop() {
       mcpWrite(outValue, CurrentFinger); //Send the value to the  DAC
     }
   }
+
 }
 
 
