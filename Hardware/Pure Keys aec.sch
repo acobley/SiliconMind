@@ -16010,10 +16010,10 @@ uC used in the Arduino&lt;br&gt;
 <part name="C14" library="rcl" deviceset="C-US" device="C0805K" value="100n"/>
 <part name="GLIDE1" library="GMSN" deviceset="9MMPOT" device="" value="rate"/>
 <part name="GLIDE2" library="GMSN" deviceset="9MMPOT" device="" value="rate"/>
-<part name="U$7" library="INSTRUO" deviceset="PB6149L-5" device=""/>
+<part name="BUT1" library="INSTRUO" deviceset="PB6149L-5" device=""/>
 <part name="R55" library="rcl" deviceset="R-US_" device="R0805" value="100K"/>
 <part name="R56" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
-<part name="U$6" library="INSTRUO" deviceset="PB6149L-5" device=""/>
+<part name="BUT2" library="INSTRUO" deviceset="PB6149L-5" device=""/>
 <part name="R1" library="rcl" deviceset="R-US_" device="R0805" value="100K"/>
 <part name="R2" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
 <part name="T1" library="INSTRUO" deviceset="TRANSISTOR_MMBT3904" device="" value="2N3904"/>
@@ -17288,12 +17288,12 @@ uC used in the Arduino&lt;br&gt;
 <instances>
 <instance part="GLIDE1" gate="G$1" x="12.7" y="35.56" rot="R270"/>
 <instance part="GLIDE2" gate="G$1" x="45.72" y="35.56" rot="R270"/>
-<instance part="U$7" gate="G$1" x="119.38" y="68.58"/>
-<instance part="U$7" gate="G$2" x="119.38" y="50.8" rot="R90"/>
+<instance part="BUT1" gate="G$1" x="119.38" y="68.58"/>
+<instance part="BUT1" gate="G$2" x="119.38" y="50.8" rot="R90"/>
 <instance part="R55" gate="G$1" x="99.06" y="60.96" rot="MR180"/>
 <instance part="R56" gate="G$1" x="132.08" y="50.8" rot="MR0"/>
-<instance part="U$6" gate="G$1" x="119.38" y="30.48"/>
-<instance part="U$6" gate="G$2" x="119.38" y="12.7" rot="R90"/>
+<instance part="BUT2" gate="G$1" x="119.38" y="30.48"/>
+<instance part="BUT2" gate="G$2" x="119.38" y="12.7" rot="R90"/>
 <instance part="R1" gate="G$1" x="99.06" y="22.86" rot="MR180"/>
 <instance part="R2" gate="G$1" x="132.08" y="12.7" rot="MR0"/>
 </instances>
@@ -17352,20 +17352,20 @@ uC used in the Arduino&lt;br&gt;
 <label x="45.72" y="43.18" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$7" gate="G$1" pin="2"/>
+<pinref part="BUT1" gate="G$1" pin="2"/>
 <wire x1="129.54" y1="68.58" x2="134.62" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="68.58" x2="134.62" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="4"/>
+<pinref part="BUT1" gate="G$1" pin="4"/>
 <wire x1="129.54" y1="63.5" x2="134.62" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="63.5" x2="134.62" y2="68.58" width="0.1524" layer="91"/>
 <junction x="134.62" y="68.58"/>
 <label x="134.62" y="71.12" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U$6" gate="G$1" pin="2"/>
+<pinref part="BUT2" gate="G$1" pin="2"/>
 <wire x1="129.54" y1="30.48" x2="134.62" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="30.48" x2="134.62" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="4"/>
+<pinref part="BUT2" gate="G$1" pin="4"/>
 <wire x1="129.54" y1="25.4" x2="134.62" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="25.4" x2="134.62" y2="30.48" width="0.1524" layer="91"/>
 <junction x="134.62" y="30.48"/>
@@ -17381,9 +17381,9 @@ uC used in the Arduino&lt;br&gt;
 </net>
 <net name="BUT1" class="0">
 <segment>
-<pinref part="U$7" gate="G$1" pin="1"/>
+<pinref part="BUT1" gate="G$1" pin="1"/>
 <wire x1="109.22" y1="68.58" x2="104.14" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="U$7" gate="G$1" pin="3"/>
+<pinref part="BUT1" gate="G$1" pin="3"/>
 <wire x1="109.22" y1="63.5" x2="104.14" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="63.5" x2="104.14" y2="68.58" width="0.1524" layer="91"/>
 <pinref part="R55" gate="G$1" pin="2"/>
@@ -17396,32 +17396,32 @@ uC used in the Arduino&lt;br&gt;
 </net>
 <net name="BUTLED1" class="0">
 <segment>
-<pinref part="U$7" gate="G$2" pin="A"/>
+<pinref part="BUT1" gate="G$2" pin="A"/>
 <wire x1="106.68" y1="50.8" x2="116.84" y2="50.8" width="0.1524" layer="91"/>
 <label x="106.68" y="50.8" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="N$65" class="0">
 <segment>
-<pinref part="U$7" gate="G$2" pin="C"/>
+<pinref part="BUT1" gate="G$2" pin="C"/>
 <pinref part="R56" gate="G$1" pin="2"/>
 <wire x1="127" y1="50.8" x2="124.46" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="U$6" gate="G$2" pin="C"/>
+<pinref part="BUT2" gate="G$2" pin="C"/>
 <pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="127" y1="12.7" x2="124.46" y2="12.7" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="BUT2" class="0">
 <segment>
-<pinref part="U$6" gate="G$1" pin="3"/>
+<pinref part="BUT2" gate="G$1" pin="3"/>
 <wire x1="109.22" y1="25.4" x2="104.14" y2="25.4" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="104.14" y1="25.4" x2="104.14" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="1"/>
+<pinref part="BUT2" gate="G$1" pin="1"/>
 <wire x1="109.22" y1="30.48" x2="104.14" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="30.48" x2="104.14" y2="25.4" width="0.1524" layer="91"/>
 <junction x="104.14" y="25.4"/>
@@ -17432,7 +17432,7 @@ uC used in the Arduino&lt;br&gt;
 </net>
 <net name="BUTLED2" class="0">
 <segment>
-<pinref part="U$6" gate="G$2" pin="A"/>
+<pinref part="BUT2" gate="G$2" pin="A"/>
 <wire x1="116.84" y1="12.7" x2="104.14" y2="12.7" width="0.1524" layer="91"/>
 <label x="104.14" y="12.7" size="1.778" layer="95" rot="R180"/>
 </segment>
