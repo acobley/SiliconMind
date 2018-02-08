@@ -16504,13 +16504,6 @@ uC used in the Arduino&lt;br&gt;
 <label x="68.58" y="119.38" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="AOIN" class="0">
-<segment>
-<pinref part="V2" gate="1" pin="A"/>
-<wire x1="210.82" y1="162.56" x2="205.74" y2="162.56" width="0.1524" layer="91"/>
-<label x="205.74" y="162.56" size="1.778" layer="95" rot="R180"/>
-</segment>
-</net>
 <net name="A1IN" class="0">
 <segment>
 <pinref part="V2" gate="1" pin="B"/>
@@ -16540,6 +16533,11 @@ uC used in the Arduino&lt;br&gt;
 <pinref part="U3" gate="G$1" pin="PC2(ADC2)"/>
 <wire x1="66.04" y1="160.02" x2="68.58" y2="160.02" width="0.1524" layer="91"/>
 <label x="68.58" y="160.02" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="V2" gate="1" pin="A"/>
+<wire x1="210.82" y1="162.56" x2="205.74" y2="162.56" width="0.1524" layer="91"/>
+<label x="205.74" y="162.56" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 </nets>
