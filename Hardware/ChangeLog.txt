@@ -1,0 +1,9 @@
+Pure Keys - Design from GMSN
+Pure Keys AEC First design form AEC
+PureKeys aec-pcb1   AEC design First board ordered Order ID G136226 10/2/2017
+
+PureKeys aec-pcb1-inProgress AEC Current Design
+------------------------------------------------
+
+aec-pcb1-inProgress Change Log 
+4/3/2018 Removed reference to TL072 IC2 
