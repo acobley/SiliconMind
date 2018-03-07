@@ -15865,6 +15865,8 @@ uC used in the Arduino&lt;br&gt;
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
+<class number="1" name="Power" width="0.8" drill="0">
+</class>
 </classes>
 <parts>
 <part name="ISP1" library="adafruit" deviceset="AVRISP" device="-6"/>
@@ -15918,7 +15920,7 @@ uC used in the Arduino&lt;br&gt;
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="CLK_IN" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
 <part name="GND13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U2" library="GMSN" deviceset="LM4040A50IDBZT" device=""/>
+<part name="U2" library="GMSN" deviceset="LM4040A50IDBZT" device="" value="LM4040"/>
 <part name="R3" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="V1" library="74ttl-din" library_urn="urn:adsk.eagle:library:84" deviceset="74*238" device="N" package3d_urn="urn:adsk.eagle:package:1462/1"/>
 <part name="V2" library="74ttl-din" library_urn="urn:adsk.eagle:library:84" deviceset="74*151" device="N" package3d_urn="urn:adsk.eagle:package:1462/1"/>
@@ -15955,7 +15957,7 @@ uC used in the Arduino&lt;br&gt;
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="GND"/>
 <wire x1="78.74" y1="68.58" x2="81.28" y2="68.58" width="0.1524" layer="91"/>
@@ -16092,7 +16094,7 @@ uC used in the Arduino&lt;br&gt;
 <pinref part="U3" gate="G$1" pin="PB1(OC1A)"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="VCC"/>
 <wire x1="78.74" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
@@ -16447,7 +16449,7 @@ uC used in the Arduino&lt;br&gt;
 <busses>
 </busses>
 <nets>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="JP2" gate="G$1" pin="VBUS"/>
 <wire x1="27.94" y1="40.64" x2="33.02" y2="40.64" width="0.1524" layer="91"/>
@@ -16464,7 +16466,7 @@ uC used in the Arduino&lt;br&gt;
 <label x="119.38" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="JP2" gate="G$1" pin="GND"/>
 <pinref part="C4" gate="G$1" pin="-"/>
@@ -16676,7 +16678,7 @@ uC used in the Arduino&lt;br&gt;
 <label x="91.44" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="20.32" y1="10.16" x2="20.32" y2="12.7" width="0.1524" layer="91"/>
@@ -16734,7 +16736,7 @@ uC used in the Arduino&lt;br&gt;
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="IC1" gate="P" pin="V-"/>
 <wire x1="119.38" y1="22.86" x2="119.38" y2="17.78" width="0.1524" layer="91"/>
@@ -16802,7 +16804,7 @@ uC used in the Arduino&lt;br&gt;
 <pinref part="IC1" gate="A" pin="+IN"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="C3" gate="G$1" pin="1"/>
 <pinref part="IC1" gate="P" pin="V+"/>
@@ -16912,7 +16914,7 @@ uC used in the Arduino&lt;br&gt;
 <label x="10.16" y="25.4" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="27.94" y1="-10.16" x2="27.94" y2="-7.62" width="0.1524" layer="91"/>
@@ -17069,7 +17071,7 @@ uC used in the Arduino&lt;br&gt;
 <junction x="147.32" y="104.14"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="CV4" gate="G$1" pin="SLEEVE"/>
 <wire x1="157.48" y1="2.54" x2="154.94" y2="2.54" width="0.1524" layer="91"/>
@@ -17209,7 +17211,7 @@ uC used in the Arduino&lt;br&gt;
 <label x="2.54" y="35.56" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="GLIDE1" gate="G$1" pin="3"/>
 <wire x1="12.7" y1="27.94" x2="12.7" y2="30.48" width="0.1524" layer="91"/>
@@ -17236,7 +17238,7 @@ uC used in the Arduino&lt;br&gt;
 <label x="88.9" y="22.86" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="GLIDE1" gate="G$1" pin="1"/>
 <wire x1="12.7" y1="43.18" x2="12.7" y2="40.64" width="0.1524" layer="91"/>
@@ -17341,7 +17343,7 @@ uC used in the Arduino&lt;br&gt;
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="T1" gate="G$1" pin="E"/>
 <wire x1="111.76" y1="78.74" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
@@ -17359,7 +17361,7 @@ uC used in the Arduino&lt;br&gt;
 <pinref part="GND13" gate="1" pin="GND"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
 <pinref part="SUPPLY9" gate="+5V" pin="+5V"/>
