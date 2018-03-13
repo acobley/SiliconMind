@@ -15,6 +15,9 @@ float Range = 4094.0;
 void writeOut(float Value){
   int Out=(int)(Range*Value);  
   mcpWrite(Out,0,0);
+  mcpWrite(Out,1,0);
+  mcpWrite(Out,0,1);
+  mcpWrite(Out,1,1);
 }
 
 void setup() {
@@ -54,7 +57,7 @@ void mcpWrite(int value, int DAC,int Channel) {
   //set top 4 bits of value integer to data variable
   byte data = value >> 8;
   data = data & B00001111;
-  if (Channel=0)
+  if (Channel==0)
      data = data | B00110000; //DACA Bit 15 Low
   else
      data = data | B10110000; //DACB Bit 15 High

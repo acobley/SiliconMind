@@ -7,3 +7,6 @@ PureKeys aec-pcb1-inProgress AEC Current Design
 
 aec-pcb1-inProgress Change Log 
 4/3/2018 Removed reference to TL072 IC2 
+13/3/2018  ChangedTL074 for MCP6004.  The TL series needs +/- VDD
+
+
