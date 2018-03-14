@@ -1,6 +1,8 @@
 #include "SPI.h"
 
 int DACS[2] = {9,10};
+int GATE1 = A5;
+
 
 
 float rad=0;
@@ -25,14 +27,21 @@ void setup() {
   SPI.setBitOrder(MSBFIRST);
   pinMode(DACS[0],OUTPUT);
   pinMode(DACS[1],OUTPUT);
+  pinMode(GATE1,OUTPUT);
   digitalWrite(DACS[0], HIGH);
   digitalWrite(DACS[1], HIGH);
+  digitalWrite(GATE1, LOW);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-rad=rad+step;
+  rad=rad+step;
+  if (rad < Pi){
+    digitalWrite(GATE1, HIGH);
+  }else{
+    digitalWrite(GATE1, LOW);
+  }
   if (rad>2.0*Pi)
      rad=0.0;
   float wave=0.5*sin(rad)+0.5; 
