@@ -14,3 +14,4 @@ aec-pcb1-inProgress Change Log
 15/3/2018  Changed 74238 to 74138
 
 TBD  Switches need pull up, not pull down.
+TBD use NOT output on 74151
