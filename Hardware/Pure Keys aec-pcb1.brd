@@ -2059,7 +2059,7 @@ design rules under a new name.</description>
 <element name="U3" library="SparkFun-IC-Microcontroller" package="DIP28" value="328P" x="41.91" y="58.42">
 <attribute name="PROD_ID" value="IC-09136" x="41.91" y="58.42" size="1.778" layer="27" display="off"/>
 </element>
-<element name="V1" library="74ttl-din" library_urn="urn:adsk.eagle:library:84" package="DIL16" package3d_urn="urn:adsk.eagle:package:1462/1" value="74238N" x="34.29" y="72.39"/>
+<element name="V1" library="74ttl-din" library_urn="urn:adsk.eagle:library:84" package="DIL16" package3d_urn="urn:adsk.eagle:package:1462/1" value="74138N" x="34.29" y="72.39"/>
 <element name="V2" library="74ttl-din" library_urn="urn:adsk.eagle:library:84" package="DIL16" package3d_urn="urn:adsk.eagle:package:1462/1" value="74151N" x="72.39" y="73.66"/>
 <element name="R4" library="rcl" package="R0805" value="10K" x="20.32" y="38.1"/>
 </elements>
