@@ -6,7 +6,7 @@
 const int MaxPoly = 2;
 
 int CurrentPoly = 2;
-int ScanOut[8] = {2, 3, 4, 5, 6, 7, 8, 9};
+int ScanOut[8] = {2, 3, 4, 5, 6, 7, 8, 9};  //T Lines, nearest keyboard
 int ScanIn[5] = {A0, A1, A2, A3, A4};
 int DACS[2] = {10, A5};
 
