@@ -12,8 +12,9 @@ int ButLED1 = 8;
 int ButLED2 = 7;
 int DAIN = A1;
 
-int Range = 819; // (2^12/5)
-int Vss = 5;
+//int Range = 819; // (2^12/5)
+int Range = 988; // (2^12/4.147)
+
 
 int KeyPressed[MaxPoly];
 
@@ -22,7 +23,8 @@ byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
 
-int mode = POLY;
+int mode = MONO;
+
 boolean States[MaxPoly];
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
 
@@ -79,11 +81,11 @@ void loop() {
     for (int j = 0; j < 5; j++) {
 
       WriteInAdd(j);
-      boolean in=true;
+      boolean in = true;
       in = digitalRead(DAIN);
-      if (in == false)   {
+      if (in == true)   {
         Key = (8 * j) + i;
-        digitalWrite(ButLED1, HIGH);
+        
         for (int l = 0; l < MaxPoly; l++) {//
           if (Key > CurrentKeys[l]) {
             if (CurrentKeys[l] == -1) {
@@ -124,11 +126,13 @@ void loop() {
 
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
     CurrentFinger = i;
-    Serial.println(States[CurrentFinger] );
+
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round
       KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
       digitalWrite(GateOut[CurrentFinger], false);
+      digitalWrite(ButLED1, LOW);
     } else {
+      digitalWrite(ButLED1, HIGH);
       digitalWrite(GateOut[CurrentFinger], true);
       Key = KeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
@@ -136,6 +140,7 @@ void loop() {
       outValue = Range * (Octave + (float)Note / 12);
       //mcpWrite(outValue, CurrentFinger); //Send the value to the  DAC
       mcpWrite(outValue, 0, 0); //Send the value to the  DAC
+      mcpWrite(outValue, 1, 0); //Send the value to the  DAC
 
     }
   }
@@ -182,3 +187,15 @@ void WriteAdd(byte address) {
 
   }
 }
+
+
+void flash(int count) {
+  for (int i = 0; i < count; i++) {
+    digitalWrite(ButLED2, HIGH);
+    delay(200);
+    digitalWrite(ButLED2, LOW);
+    delay(200);
+
+  }
+}
+
