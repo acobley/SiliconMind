@@ -2,7 +2,7 @@ Pure Keys - Design from GMSN
 Pure Keys AEC First design form AEC
 PureKeys aec-pcb1   AEC design First board ordered Order ID G136226 10/2/2017
 15/3/2018  Changed 74238 to 74138
-
+20/3/2018  Changed back to L74238
 
 
 PureKeys aec-pcb1-inProgress AEC Current Design
@@ -13,9 +13,11 @@ aec-pcb1-inProgress Change Log
 13/3/2018  ChangedTL074 for MCP6004.  The TL series needs +/- VDD
 15/3/2018  Changed 74238 to 74138
 16/3/2018  Move switch resistors to 5v end
-
+20/3/2018  Changed to 3V reference and changed the ref resistor R3 to 2K
+20/3/2018  Changed back to L74238
+20/3/2018  pull down 1K on MK0-Mk4
 
 TBD 
-revert to 74238
-pull down 1K on MK0-Mk4
-3v ref?
+
+
+

@@ -13,8 +13,12 @@ int ButLED2 = 7;
 int DAIN = A1;
 
 //int Range = 819; // (2^12/5)
-int Range = 988; // (2^12/4.147)
-
+float Range = 937.728; // (2^12/4.368)
+float noteRange = 82.30849;
+/*
+ * Calculation is Range * (Octave + (float)Note / 12);
+ * So Range is steps per Octave
+ */
 
 int KeyPressed[MaxPoly];
 
@@ -137,7 +141,7 @@ void loop() {
       Key = KeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
-      outValue = Range * (Octave + (float)Note / 12);
+      outValue = (int)(Range * (Octave + (float)Note / 12));
       
       //mcpWrite(outValue, CurrentFinger); //Send the value to the  DAC
       
