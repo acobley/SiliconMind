@@ -6,7 +6,7 @@
 const int MaxPoly = 4;
 
 int CurrentPoly = 4;
-int DACS[2] = {9, 10};
+int DACS[2] = {10,9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
@@ -138,10 +138,11 @@ void loop() {
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = Range * (Octave + (float)Note / 12);
+      
       //mcpWrite(outValue, CurrentFinger); //Send the value to the  DAC
-      mcpWrite(outValue, 0, 0); //Send the value to the  DAC
-      mcpWrite(outValue, 1, 0); //Send the value to the  DAC
-
+      
+      mcpWrite(outValue, CurrentFinger/2, CurrentFinger &0x01); //Send the value to the  DAC
+  
     }
   }
 
