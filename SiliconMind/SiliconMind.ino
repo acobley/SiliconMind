@@ -13,7 +13,7 @@ int ButLED2 = 7;
 int DAIN = A1;
 
 //int Range = 819; // (2^12/5)
-float Range = 937.728; // (2^12/4.368)
+float Range = 937.728; // (2^12/4.368) //this is temp value until the ref diode is stable.
 float noteRange = 82.30849;
 /*
  * Calculation is Range * (Octave + (float)Note / 12);

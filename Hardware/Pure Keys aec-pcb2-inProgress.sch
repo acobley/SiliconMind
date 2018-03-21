@@ -15898,11 +15898,6 @@ uC used in the Arduino&lt;br&gt;
 <instance part="V2" gate="/+UB" x="289.56" y="170.18"/>
 <instance part="V2" gate="/-UB" x="292.1" y="109.22"/>
 <instance part="R4" gate="G$1" x="121.92" y="144.78" rot="R90"/>
-<instance part="R1" gate="G$1" x="198.12" y="137.16" rot="R90"/>
-<instance part="R10" gate="G$1" x="205.74" y="132.08" rot="R90"/>
-<instance part="R11" gate="G$1" x="215.9" y="127" rot="R90"/>
-<instance part="R12" gate="G$1" x="223.52" y="121.92" rot="R90"/>
-<instance part="R13" gate="G$1" x="233.68" y="116.84" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -15985,31 +15980,6 @@ uC used in the Arduino&lt;br&gt;
 <pinref part="V2" gate="1" pin="!G"/>
 <wire x1="251.46" y1="162.56" x2="246.38" y2="162.56" width="0.1524" layer="91"/>
 <label x="246.38" y="162.56" size="1.778" layer="95" rot="R180"/>
-</segment>
-<segment>
-<pinref part="R1" gate="G$1" pin="1"/>
-<wire x1="198.12" y1="132.08" x2="198.12" y2="129.54" width="0.1524" layer="91"/>
-<label x="198.12" y="129.54" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R10" gate="G$1" pin="1"/>
-<wire x1="205.74" y1="127" x2="205.74" y2="124.46" width="0.1524" layer="91"/>
-<label x="205.74" y="124.46" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R11" gate="G$1" pin="1"/>
-<wire x1="215.9" y1="121.92" x2="215.9" y2="119.38" width="0.1524" layer="91"/>
-<label x="215.9" y="119.38" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R12" gate="G$1" pin="1"/>
-<wire x1="223.52" y1="116.84" x2="223.52" y2="114.3" width="0.1524" layer="91"/>
-<label x="223.52" y="114.3" size="1.778" layer="95"/>
-</segment>
-<segment>
-<pinref part="R13" gate="G$1" pin="1"/>
-<wire x1="233.68" y1="111.76" x2="233.68" y2="109.22" width="0.1524" layer="91"/>
-<label x="233.68" y="109.22" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RST" class="0">
@@ -16127,27 +16097,8 @@ uC used in the Arduino&lt;br&gt;
 <net name="MK4" class="0">
 <segment>
 <pinref part="V2" gate="1" pin="D4"/>
-<wire x1="251.46" y1="121.92" x2="248.92" y2="121.92" width="0.1524" layer="91"/>
 <label x="246.38" y="121.92" size="1.778" layer="95" rot="R180"/>
-<pinref part="R13" gate="G$1" pin="2"/>
-<wire x1="248.92" y1="121.92" x2="246.38" y2="121.92" width="0.1524" layer="91"/>
-<wire x1="233.68" y1="121.92" x2="246.38" y2="121.92" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="MK3" class="0">
-<segment>
-<pinref part="V2" gate="1" pin="D3"/>
-<label x="246.38" y="127" size="1.778" layer="95" rot="R180"/>
-<pinref part="R12" gate="G$1" pin="2"/>
-<wire x1="223.52" y1="127" x2="251.46" y2="127" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="MK2" class="0">
-<segment>
-<pinref part="V2" gate="1" pin="D2"/>
-<label x="246.38" y="132.08" size="1.778" layer="95" rot="R180"/>
-<pinref part="R11" gate="G$1" pin="2"/>
-<wire x1="215.9" y1="132.08" x2="251.46" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="251.46" y1="121.92" x2="246.38" y2="121.92" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TRIG3" class="0">
@@ -16312,22 +16263,6 @@ uC used in the Arduino&lt;br&gt;
 <label x="182.88" y="162.56" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="MK1" class="0">
-<segment>
-<pinref part="V2" gate="1" pin="D1"/>
-<label x="246.38" y="137.16" size="1.778" layer="95" rot="R180"/>
-<pinref part="R10" gate="G$1" pin="2"/>
-<wire x1="205.74" y1="137.16" x2="251.46" y2="137.16" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="MK0" class="0">
-<segment>
-<pinref part="V2" gate="1" pin="D0"/>
-<label x="246.38" y="142.24" size="1.778" layer="95" rot="R180"/>
-<pinref part="R1" gate="G$1" pin="2"/>
-<wire x1="251.46" y1="142.24" x2="198.12" y2="142.24" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="T4" class="0">
 <segment>
 <pinref part="V1" gate="1" pin="Y4"/>
@@ -16416,6 +16351,34 @@ uC used in the Arduino&lt;br&gt;
 <label x="246.38" y="157.48" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
+<net name="MK0" class="0">
+<segment>
+<pinref part="V2" gate="1" pin="D0"/>
+<wire x1="251.46" y1="142.24" x2="246.38" y2="142.24" width="0.1524" layer="91"/>
+<label x="246.38" y="142.24" size="1.778" layer="95" rot="R180"/>
+</segment>
+</net>
+<net name="MK1" class="0">
+<segment>
+<pinref part="V2" gate="1" pin="D1"/>
+<wire x1="251.46" y1="137.16" x2="246.38" y2="137.16" width="0.1524" layer="91"/>
+<label x="246.38" y="137.16" size="1.778" layer="95" rot="R180"/>
+</segment>
+</net>
+<net name="MK3" class="0">
+<segment>
+<pinref part="V2" gate="1" pin="D3"/>
+<wire x1="251.46" y1="127" x2="246.38" y2="127" width="0.1524" layer="91"/>
+<label x="246.38" y="127" size="1.778" layer="95" rot="R180"/>
+</segment>
+</net>
+<net name="MK2" class="0">
+<segment>
+<pinref part="V2" gate="1" pin="D2"/>
+<wire x1="251.46" y1="132.08" x2="246.38" y2="132.08" width="0.1524" layer="91"/>
+<label x="246.38" y="132.08" size="1.778" layer="95" rot="R180"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -16490,6 +16453,11 @@ uC used in the Arduino&lt;br&gt;
 <instance part="R21" gate="G$1" x="81.28" y="17.78" rot="R90"/>
 <instance part="R22" gate="G$1" x="93.98" y="17.78" rot="R90"/>
 <instance part="U$4" gate="G$1" x="76.2" y="81.28"/>
+<instance part="R1" gate="G$1" x="-10.16" y="58.42" rot="R90"/>
+<instance part="R10" gate="G$1" x="0" y="58.42" rot="R90"/>
+<instance part="R11" gate="G$1" x="7.62" y="58.42" rot="R90"/>
+<instance part="R12" gate="G$1" x="15.24" y="58.42" rot="R90"/>
+<instance part="R13" gate="G$1" x="22.86" y="58.42" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -16631,12 +16599,22 @@ uC used in the Arduino&lt;br&gt;
 <wire x1="83.82" y1="91.44" x2="91.44" y2="91.44" width="0.1524" layer="91"/>
 <label x="91.44" y="91.44" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="2"/>
+<wire x1="-10.16" y1="63.5" x2="-10.16" y2="66.04" width="0.1524" layer="91"/>
+<label x="-10.16" y="66.04" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MK1" class="0">
 <segment>
 <pinref part="U$4" gate="G$1" pin="6"/>
 <wire x1="83.82" y1="86.36" x2="91.44" y2="86.36" width="0.1524" layer="91"/>
 <label x="91.44" y="86.36" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R10" gate="G$1" pin="2"/>
+<wire x1="0" y1="63.5" x2="0" y2="66.04" width="0.1524" layer="91"/>
+<label x="0" y="66.04" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MK2" class="0">
@@ -16645,6 +16623,11 @@ uC used in the Arduino&lt;br&gt;
 <wire x1="83.82" y1="81.28" x2="91.44" y2="81.28" width="0.1524" layer="91"/>
 <label x="91.44" y="81.28" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="R11" gate="G$1" pin="2"/>
+<wire x1="7.62" y1="63.5" x2="7.62" y2="66.04" width="0.1524" layer="91"/>
+<label x="7.62" y="66.04" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MK3" class="0">
 <segment>
@@ -16652,12 +16635,22 @@ uC used in the Arduino&lt;br&gt;
 <wire x1="83.82" y1="76.2" x2="91.44" y2="76.2" width="0.1524" layer="91"/>
 <label x="91.44" y="76.2" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="R12" gate="G$1" pin="2"/>
+<wire x1="15.24" y1="63.5" x2="15.24" y2="66.04" width="0.1524" layer="91"/>
+<label x="15.24" y="66.04" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="MK4" class="0">
 <segment>
 <pinref part="U$4" gate="G$1" pin="18"/>
 <wire x1="83.82" y1="71.12" x2="91.44" y2="71.12" width="0.1524" layer="91"/>
 <label x="91.44" y="71.12" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R13" gate="G$1" pin="2"/>
+<wire x1="22.86" y1="63.5" x2="22.86" y2="66.04" width="0.1524" layer="91"/>
+<label x="22.86" y="66.04" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GND" class="1">
@@ -16695,6 +16688,29 @@ uC used in the Arduino&lt;br&gt;
 <wire x1="30.48" y1="12.7" x2="30.48" y2="10.16" width="0.1524" layer="91"/>
 <junction x="30.48" y="10.16"/>
 <label x="7.62" y="7.62" size="1.778" layer="95" rot="R180"/>
+</segment>
+<segment>
+<pinref part="R1" gate="G$1" pin="1"/>
+<wire x1="-10.16" y1="53.34" x2="-10.16" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="R10" gate="G$1" pin="1"/>
+<wire x1="0" y1="53.34" x2="0" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="-10.16" y1="50.8" x2="0" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<wire x1="7.62" y1="53.34" x2="7.62" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="0" y1="50.8" x2="7.62" y2="50.8" width="0.1524" layer="91"/>
+<junction x="0" y="50.8"/>
+<pinref part="R12" gate="G$1" pin="1"/>
+<wire x1="15.24" y1="53.34" x2="15.24" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="50.8" x2="15.24" y2="50.8" width="0.1524" layer="91"/>
+<junction x="7.62" y="50.8"/>
+<pinref part="R13" gate="G$1" pin="1"/>
+<wire x1="22.86" y1="53.34" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="50.8" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
+<junction x="15.24" y="50.8"/>
+<wire x1="-10.16" y1="50.8" x2="-17.78" y2="50.8" width="0.1524" layer="91"/>
+<junction x="-10.16" y="50.8"/>
+<wire x1="-17.78" y1="50.8" x2="-17.78" y2="48.26" width="0.1524" layer="91"/>
+<label x="-17.78" y="48.26" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
