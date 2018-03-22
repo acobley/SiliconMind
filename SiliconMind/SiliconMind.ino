@@ -27,7 +27,7 @@ byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
 
-int mode = MONO;
+int mode = POLY;
 
 boolean States[MaxPoly];
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
@@ -55,7 +55,7 @@ void setup() {
   if (mode == MONO)
     CurrentPoly = 1;
   else if (mode == SPLIT)
-    CurrentPoly = 4;
+    CurrentPoly = 2;
   else if (mode == POLY)
     CurrentPoly = MaxPoly;
   pinMode(ButLED1, OUTPUT);
@@ -193,7 +193,7 @@ void WriteAdd(byte address) {
   }
 }
 
-
+/* debug code */
 void flash(int count) {
   for (int i = 0; i < count; i++) {
     digitalWrite(ButLED2, HIGH);
