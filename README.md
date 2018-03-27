@@ -3,9 +3,11 @@ This is a project to create a voltage control keyboard for Eurorack Synths.  The
 
 The hardware is based around the ATMEGA.
 
+See alos Changelog.txt in Hardware
+
 Software 
 
-SiliconMind.ion is latest for aec-pcb1 First PCB hardware
+SiliconMind.ion is latest for aec-pcb2 First PCB hardware
 
                   Work in progress, in test !
 
@@ -18,7 +20,12 @@ Pure Keys aec-pcb1 First PCB  do not use
       	       Needs pull down resistors on	MK lines
                    5V Ref needs	 replacing with 3v version
                    Switch needs	 pull up, not down.
-Pure Keys aec-pcb2-inProgress. 
+Pure Keys aec-pcb2. 
 
-                   Next design work	in progress, changes in pcb1 are rolled into this
-                   Do not use until Pure Keys aec-pcb2 is ready
+                   Changes in pcb1 are rolled into this
+                   Pure Keys aec-pcb2 In Progress
+
+Pure Keys aec-pcb3-inProgress
+
+	Next design in progress
+	     	    Changes from pcb2 are rolled into this 
