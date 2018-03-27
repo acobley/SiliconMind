@@ -1,3 +1,5 @@
+View this project on [CADLAB.io](https://cadlab.io/node/794). 
+
 # SiliconMind
 This is a project to create a voltage control keyboard for Eurorack Synths.  The aim is to create a fourvoice polyhtonic keyboard, with no MIDI at all.
 
