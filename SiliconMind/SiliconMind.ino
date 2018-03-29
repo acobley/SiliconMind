@@ -32,6 +32,12 @@ int mode = POLY;
 boolean States[MaxPoly];
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
 
+
+void calcRange(){
+  Range= 4096.0/(4.0+(float)analogRead(A0)/1024.0);
+  
+}
+
 void setup() {
   for (byte A = 4; A < 7; A++) {
     pinMode(A, OUTPUT);
@@ -70,11 +76,10 @@ void setup() {
   digitalWrite(ButLED2, LOW);
 }
 
+
+int CurrentKeys [MaxPoly];
 void loop() {
-
-
-  int CurrentKeys [MaxPoly];
-
+  calcRange();
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
     States[i] = false;
     CurrentKeys[i] = -1;
