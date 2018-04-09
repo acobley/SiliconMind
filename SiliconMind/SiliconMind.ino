@@ -16,6 +16,8 @@ int But2=7;
 boolean But1State=false;
 boolean But2State=true;
 
+float PortRate=0.25;
+
 int DAIN = A1;
 
 
@@ -27,6 +29,9 @@ float Range = 1365.333; // (2^12/3)
 */
 
 int KeyPressed[MaxPoly];
+float CurrentOutValue[MaxPoly];
+int CurrentTarget[MaxPoly];
+
 
 
 byte Octave = -1;
@@ -46,6 +51,11 @@ void calcRange() {
 
 }
 
+void PolyRate() {
+  PortRate = (float)(analogRead(A0) / 1024.0)*250;
+
+}
+
 void setup() {
   for (byte A = 4; A < 7; A++) {
     pinMode(A, OUTPUT);
@@ -61,6 +71,8 @@ void setup() {
 
     States[i] = false;
     KeyPressed[i] = -1;
+    CurrentOutValue[i]=0;
+    CurrentTarget[i]=0;
   }
   for (int i = 0; i < 2; i++) {
     pinMode(DACS[i], OUTPUT); //DAC Chip Select
@@ -109,6 +121,7 @@ int CurrentKeys [MaxPoly];
 void loop() {
   
   SetPolyMode();
+  PolyRate();
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
     States[i] = false;
     CurrentKeys[i] = -1;
@@ -184,8 +197,26 @@ void loop() {
       outValue = (int)(Range * (Octave + (float)Note / 12));
       digitalWrite(ButLED1, HIGH);
       if ( mode != SPLIT) {
+        /* Most of this deals with Portemantau
+         *  
+         */
+        CurrentTarget[CurrentFinger]=outValue;
+        int delta=outValue-CurrentOutValue[CurrentFinger];
+        int Sign=1;
+        if (delta <0)
+          Sign=-1;
+        CurrentOutValue[CurrentFinger]=CurrentOutValue[CurrentFinger]+Sign*PortRate;
+        if (Sign>0){
+          if (CurrentOutValue[CurrentFinger] >=CurrentTarget[CurrentFinger])
+             CurrentOutValue[CurrentFinger]=CurrentTarget[CurrentFinger];
+        }
+        else{
+          if (CurrentOutValue[CurrentFinger] <=CurrentTarget[CurrentFinger])
+             CurrentOutValue[CurrentFinger]=CurrentTarget[CurrentFinger];
+        }
+        mcpWrite(CurrentOutValue[CurrentFinger], CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
         digitalWrite(GateOut[CurrentFinger], true);
-        mcpWrite(outValue, CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
+        
       } else {
         if (Key <= SPLITKEY) {
           digitalWrite(GateOut[0], true);
