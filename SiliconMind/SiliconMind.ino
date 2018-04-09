@@ -1,7 +1,7 @@
 #include "SPI.h"
-#define MONO 1
+#define MONO 3
 #define SPLIT 2
-#define POLY 3
+#define POLY 1
 
 const int MaxPoly = 4;
 int SPLITKEY = 16;
@@ -11,6 +11,11 @@ int DACS[2] = {10, 9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
+int But1=6;
+int But2=7;
+boolean But1State=false;
+boolean But2State=true;
+
 int DAIN = A1;
 
 
@@ -28,7 +33,7 @@ byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
 
-int mode = SPLIT;
+int mode = POLY;
 
 boolean States[MaxPoly];
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
@@ -80,10 +85,30 @@ void setup() {
 }
 
 
+void SetPolyMode(){
+  boolean State=GetSwitchState(But1);
+  if ((But1State==false) && (State==true)){
+    //Change the mode
+    mode++;
+    if (mode>MONO){
+      mode=POLY;
+    }
+    flash(mode);
+    if (mode == MONO)
+    CurrentPoly = 1;
+  else if (mode == SPLIT)
+    CurrentPoly = 2;
+  else if (mode == POLY)
+    CurrentPoly = MaxPoly;
+  }
+  But1State=State;
+}
+
 int CurrentKeys [MaxPoly];
 
 void loop() {
-  //calcRange();
+  
+  SetPolyMode();
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
     States[i] = false;
     CurrentKeys[i] = -1;
@@ -220,10 +245,19 @@ void WriteAdd(byte address) {
 void flash(int count) {
   for (int i = 0; i < count; i++) {
     digitalWrite(ButLED2, HIGH);
-    delay(200);
+    delay(500);
     digitalWrite(ButLED2, LOW);
-    delay(200);
+    delay(500);
 
   }
+}
+
+boolean GetSwitchState(int Switch){
+  WriteInAdd(Switch);
+  if (digitalRead(DAIN) ==false){
+    return true;
+  }
+  return false;
+   
 }
 
