@@ -4,21 +4,22 @@
 #define POLY 3
 
 const int MaxPoly = 4;
+int SPLITKEY = 16;
 
 int CurrentPoly = 4;
-int DACS[2] = {10,9};
+int DACS[2] = {10, 9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
 int DAIN = A1;
 
-//int Range = 819; // (2^12/5)
-float Range = 1365.333; // (2^12/4.368) //this is temp value until the ref diode is stable.
-//float noteRange = 82.30849;
+
+float Range = 1365.333; // (2^12/3)
+
 /*
- * Calculation is Range * (Octave + (float)Note / 12);
- * So Range is steps per Octave
- */
+   Calculation is Range * (Octave + (float)Note / 12);
+   So Range is steps per Octave
+*/
 
 int KeyPressed[MaxPoly];
 
@@ -27,15 +28,17 @@ byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
 
-int mode = POLY;
+int mode = SPLIT;
 
 boolean States[MaxPoly];
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
 
+/*
+   This is only needed if no 3V ref is used.
+*/
+void calcRange() {
+  Range = 4096.0 / (4.0 + (float)analogRead(A0) / 1024.0);
 
-void calcRange(){
-  Range= 4096.0/(4.0+(float)analogRead(A0)/1024.0);
-  
 }
 
 void setup() {
@@ -78,6 +81,7 @@ void setup() {
 
 
 int CurrentKeys [MaxPoly];
+
 void loop() {
   //calcRange();
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
@@ -94,8 +98,8 @@ void loop() {
       in = digitalRead(DAIN);
       if (in == true)   {
         Key = (8 * j) + i;
-        
-        for (int l = 0; l < MaxPoly; l++) {//
+
+        for (int l = 0; l < MaxPoly; l++) {//This is an sort routine in case the notes do not come in order
           if (Key > CurrentKeys[l]) {
             if (CurrentKeys[l] == -1) {
               CurrentKeys[l] = Key;
@@ -119,12 +123,8 @@ void loop() {
 
 
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
-
     Key = CurrentKeys[i];
-
     if (Key != -1) {
-
-
       States[CurrentFinger] = true;
       KeyPressed[CurrentFinger] = Key;       //Record this Key
       CurrentFinger++;
@@ -136,22 +136,40 @@ void loop() {
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
     CurrentFinger = i;
 
-    if (States[CurrentFinger] == false) {  //No Key was pressed this time round
-      KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
-      digitalWrite(GateOut[CurrentFinger], false);
+    if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
+      Key = KeyPressed[CurrentFinger] ;
+
       digitalWrite(ButLED1, LOW);
+      if ( mode != SPLIT) {
+        digitalWrite(GateOut[CurrentFinger], false);
+
+      } else {
+        if (Key <= SPLITKEY) {
+
+          digitalWrite(GateOut[0], false);
+        } else {
+          digitalWrite(GateOut[1], false);
+        }
+      }
+      KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
     } else {
-      digitalWrite(ButLED1, HIGH);
-      digitalWrite(GateOut[CurrentFinger], true);
       Key = KeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
-      
-      //mcpWrite(outValue, CurrentFinger); //Send the value to the  DAC
-      
-      mcpWrite(outValue, CurrentFinger/2, CurrentFinger &0x01); //Send the value to the  DAC
-  
+      digitalWrite(ButLED1, HIGH);
+      if ( mode != SPLIT) {
+        digitalWrite(GateOut[CurrentFinger], true);
+        mcpWrite(outValue, CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
+      } else {
+        if (Key <= SPLITKEY) {
+          digitalWrite(GateOut[0], true);
+          mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
+        } else {
+          digitalWrite(GateOut[1], true);
+          mcpWrite(outValue, 0, 1); //Send the value to the  Out 1
+        }
+      }
     }
   }
 
