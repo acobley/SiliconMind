@@ -51,7 +51,7 @@ void calcRange() {
 
 }
 
-void PolyRate() {
+void PolyRate() {//  This needs some work to get a fullrange
   PortRate = (float)(analogRead(A0) / 1024.0)*250;
 
 }
