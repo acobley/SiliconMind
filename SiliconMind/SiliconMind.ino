@@ -3,24 +3,29 @@
 #define SPLIT 2
 #define POLY 1
 
+#define NONE 0
+#define PLAY 1
+#define RECORD 2
+
 const int MaxPoly = 4;
 int SPLITKEY = 16;
+const byte GateInInterrupt = 2;
+boolean LedState = false;
 
 int CurrentPoly = 4;
 int DACS[2] = {10, 9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
-int But1=6;
-int But2=7;
-boolean But1State=false;
-boolean But2State=true;
+int But1 = 6;
+int But2 = 7;
+boolean But1State = false;
+boolean But2State = false;
+int RecordMode = NONE;
 
-float PortRate=0.25;
-
+int mode = POLY;
 int DAIN = A1;
-
-
+float PortRate = 0.25; //Initial Port
 float Range = 1365.333; // (2^12/3)
 
 /*
@@ -38,10 +43,13 @@ byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
 
-int mode = POLY;
-
 boolean States[MaxPoly];
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
+
+int SequenceNotes[1024];
+int SequenceGates[1024];
+int SequenceLength = 0;
+
 
 /*
    This is only needed if no 3V ref is used.
@@ -51,8 +59,8 @@ void calcRange() {
 
 }
 
-void PolyRate() {//  This needs some work to get a fullrange
-  PortRate = (float)(analogRead(A0) / 1024.0)*250;
+void getPortRate() {//  This needs some work to get a full range
+  PortRate = (float)(analogRead(A0) / 1024.0) * 250;
 
 }
 
@@ -71,8 +79,8 @@ void setup() {
 
     States[i] = false;
     KeyPressed[i] = -1;
-    CurrentOutValue[i]=0;
-    CurrentTarget[i]=0;
+    CurrentOutValue[i] = 0;
+    CurrentTarget[i] = 0;
   }
   for (int i = 0; i < 2; i++) {
     pinMode(DACS[i], OUTPUT); //DAC Chip Select
@@ -94,34 +102,100 @@ void setup() {
   delay(500);
   digitalWrite(ButLED1, LOW);
   digitalWrite(ButLED2, LOW);
+  attachInterrupt(digitalPinToInterrupt(GateInInterrupt), HandleClock, RISING);
 }
 
 
-void SetPolyMode(){
-  boolean State=GetSwitchState(But1);
-  if ((But1State==false) && (State==true)){
+void HandleClock() {
+  LedState = !LedState;
+  if (RecordMode != NONE) {
+    if (RecordMode == PLAY) {
+      digitalWrite(ButLED1, LedState);
+    } else {
+      digitalWrite(ButLED2, LedState);
+    }
+  }
+}
+
+
+int HoldCount = 0;
+void getRecordMode() {
+  
+  boolean State = GetSwitchState(But2);
+  if ((But2State == false) && (State == true)) {
+    if (RecordMode==NONE){
+       RecordMode = PLAY;
+        But2State = State; //true
+    }else{
+      RecordMode =NONE;
+      But2State = State;
+    }
+    
+  }
+  if ((But2State == true) && (State == true)) {
+    HoldCount++;
+    if (HoldCount > 2000) {
+      
+          RecordMode = RECORD;
+          HoldCount = 2001;
+    }
+    
+  }
+  if (State==false){
+     But2State=false;
+     HoldCount=0;
+  }
+  
+}
+
+void SetPolyMode() {
+  boolean State = GetSwitchState(But1);
+  if ((But1State == false) && (State == true)) {
     //Change the mode
     mode++;
-    if (mode>MONO){
-      mode=POLY;
+    if (mode > MONO) {
+      mode = POLY;
     }
-    flash(mode);
+    flash(mode, ButLED1);
     if (mode == MONO)
-    CurrentPoly = 1;
-  else if (mode == SPLIT)
-    CurrentPoly = 2;
-  else if (mode == POLY)
-    CurrentPoly = MaxPoly;
+      CurrentPoly = 1;
+    else if (mode == SPLIT)
+      CurrentPoly = 2;
+    else if (mode == POLY)
+      CurrentPoly = MaxPoly;
   }
-  But1State=State;
+  But1State = State;
 }
 
 int CurrentKeys [MaxPoly];
 
 void loop() {
-  
+
   SetPolyMode();
-  PolyRate();
+  getPortRate();
+  getRecordMode();
+  ScanKeyboard();
+  AssignVoices();
+  WriteNotesOut();
+}
+
+/*
+   This needs some work, keys will move about voices as notes are added.
+*/
+void AssignVoices() {
+  int CurrentFinger = 0;
+  int Key = -1;
+  for (int i = 0; i < CurrentPoly; i++) { //Assign voices
+    Key = CurrentKeys[i];
+    if (Key != -1) {
+      States[CurrentFinger] = true;
+      KeyPressed[CurrentFinger] = Key;       //Record this Key
+      CurrentFinger++;
+
+    }
+  }
+}
+void ScanKeyboard() {
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
     States[i] = false;
     CurrentKeys[i] = -1;
@@ -157,20 +231,11 @@ void loop() {
     }
 
   }
+}
+
+void WriteNotesOut() {
   int CurrentFinger = 0;
-
-
-  for (int i = 0; i < CurrentPoly; i++) { //Assign voices
-    Key = CurrentKeys[i];
-    if (Key != -1) {
-      States[CurrentFinger] = true;
-      KeyPressed[CurrentFinger] = Key;       //Record this Key
-      CurrentFinger++;
-
-    }
-  }
-
-
+  int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
     CurrentFinger = i;
 
@@ -198,25 +263,25 @@ void loop() {
       digitalWrite(ButLED1, HIGH);
       if ( mode != SPLIT) {
         /* Most of this deals with Portemantau
-         *  
-         */
-        CurrentTarget[CurrentFinger]=outValue;
-        int delta=outValue-CurrentOutValue[CurrentFinger];
-        int Sign=1;
-        if (delta <0)
-          Sign=-1;
-        CurrentOutValue[CurrentFinger]=CurrentOutValue[CurrentFinger]+Sign*PortRate;
-        if (Sign>0){
-          if (CurrentOutValue[CurrentFinger] >=CurrentTarget[CurrentFinger])
-             CurrentOutValue[CurrentFinger]=CurrentTarget[CurrentFinger];
+
+        */
+        CurrentTarget[CurrentFinger] = outValue;
+        int delta = outValue - CurrentOutValue[CurrentFinger];
+        int Sign = 1;
+        if (delta < 0)
+          Sign = -1;
+        CurrentOutValue[CurrentFinger] = CurrentOutValue[CurrentFinger] + Sign * PortRate;
+        if (Sign > 0) {
+          if (CurrentOutValue[CurrentFinger] >= CurrentTarget[CurrentFinger])
+            CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
         }
-        else{
-          if (CurrentOutValue[CurrentFinger] <=CurrentTarget[CurrentFinger])
-             CurrentOutValue[CurrentFinger]=CurrentTarget[CurrentFinger];
+        else {
+          if (CurrentOutValue[CurrentFinger] <= CurrentTarget[CurrentFinger])
+            CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
         }
         mcpWrite(CurrentOutValue[CurrentFinger], CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
         digitalWrite(GateOut[CurrentFinger], true);
-        
+
       } else {
         if (Key <= SPLITKEY) {
           digitalWrite(GateOut[0], true);
@@ -228,9 +293,7 @@ void loop() {
       }
     }
   }
-
 }
-
 
 //Function for writing value to DAC. 0 = Off 4095 = Full on.
 
@@ -273,22 +336,22 @@ void WriteAdd(byte address) {
 }
 
 /* debug code */
-void flash(int count) {
+void flash(int count, int Button) {
   for (int i = 0; i < count; i++) {
-    digitalWrite(ButLED2, HIGH);
+    digitalWrite(Button, HIGH);
     delay(500);
-    digitalWrite(ButLED2, LOW);
+    digitalWrite(Button, LOW);
     delay(500);
 
   }
 }
 
-boolean GetSwitchState(int Switch){
+boolean GetSwitchState(int Switch) {
   WriteInAdd(Switch);
-  if (digitalRead(DAIN) ==false){
+  if (digitalRead(DAIN) == false) {
     return true;
   }
   return false;
-   
+
 }
 
