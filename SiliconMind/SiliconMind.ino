@@ -1,4 +1,6 @@
 #include "SPI.h"
+#include <EEPROM.h>
+
 #define MONO 3
 #define SPLIT 2
 #define POLY 1
@@ -17,6 +19,8 @@ int DACS[2] = {10, 9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
+int LedFlashCount1 = 0;
+int LedFlashCount2 = 0;
 int But1 = 6;
 int But2 = 7;
 boolean But1State = false;
@@ -33,22 +37,24 @@ float Range = 1365.333; // (2^12/3)
    So Range is steps per Octave
 */
 
-int KeyPressed[MaxPoly];
-float CurrentOutValue[MaxPoly];
-int CurrentTarget[MaxPoly];
-
+int KeyPressed[MaxPoly+1];
+float CurrentOutValue[MaxPoly+1];
+int CurrentTarget[MaxPoly+1];
+boolean States[MaxPoly+1];
+boolean CurrentGates[MaxPoly+1];
 
 
 byte Octave = -1;
 byte Note = -1;
 int outValue = 0;
 
-boolean States[MaxPoly];
+
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
 
-int SequenceNotes[1024];
-int SequenceGates[1024];
+int SequenceNotes[128];
+int SequenceGates[128];
 int SequenceLength = 0;
+int CurrentSequenceNum = 0;
 
 
 /*
@@ -81,6 +87,7 @@ void setup() {
     KeyPressed[i] = -1;
     CurrentOutValue[i] = 0;
     CurrentTarget[i] = 0;
+    CurrentGates[i] = false;
   }
   for (int i = 0; i < 2; i++) {
     pinMode(DACS[i], OUTPUT); //DAC Chip Select
@@ -102,50 +109,103 @@ void setup() {
   delay(500);
   digitalWrite(ButLED1, LOW);
   digitalWrite(ButLED2, LOW);
-  attachInterrupt(digitalPinToInterrupt(GateInInterrupt), HandleClock, RISING);
+  attachInterrupt(digitalPinToInterrupt(GateInInterrupt), HandleClock, FALLING);
 }
 
 
 void HandleClock() {
-  LedState = !LedState;
+  //LedState = !LedState;
   if (RecordMode != NONE) {
     if (RecordMode == PLAY) {
-      digitalWrite(ButLED1, LedState);
+      //digitalWrite(ButLED1, LedState);
+      LedFlashCount1 = 1;
+
+
+      KeyPressed[0] = SequenceNotes[CurrentSequenceNum];
+      States[0] = SequenceGates[CurrentSequenceNum];
+      //WriteNotesOut();
+
+      int Key = KeyPressed[0];
+      int Octave = (byte)(Key / 12);
+      Note = (byte)(Key % 12);
+      outValue = (int)(Range * (Octave + (float)Note / 12));
+
+
+      digitalWrite(GateOut[0], States[0]);
+      mcpWrite(outValue, 0, 0); //Send the value to the  DAC
+
+      //SequenceNotesOut();
+      CurrentSequenceNum++;
+      if (CurrentSequenceNum >= SequenceLength) {
+        CurrentSequenceNum = 0;
+      }
+
     } else {
-      digitalWrite(ButLED2, LedState);
+      //digitalWrite(ButLED2, LedState);
+      LedFlashCount2 = 1;
+      SequenceNotes[CurrentSequenceNum] = KeyPressed[0];
+      SequenceGates[CurrentSequenceNum] = CurrentGates[0];
+      SequenceLength = CurrentSequenceNum + 1;
+      CurrentSequenceNum++;
+      if (CurrentSequenceNum > 127) {
+        CurrentSequenceNum = 127;
+      }
     }
   }
 }
 
+void FlashLeds() {
+  if (LedFlashCount1 != 0) {
+    digitalWrite(ButLED1, HIGH);
+    LedFlashCount1++;
+    if (LedFlashCount1 > 100)
+      LedFlashCount1 = 0;
+  } else {
+    digitalWrite(ButLED1, LOW);
+  }
+  if (LedFlashCount2 != 0) {
+    digitalWrite(ButLED2, HIGH);
+    LedFlashCount2++;
+    if (LedFlashCount2 > 100)
+      LedFlashCount2 = 0;
+  } else {
+    digitalWrite(ButLED2, LOW);
+  }
+}
 
 int HoldCount = 0;
 void getRecordMode() {
-  
+
   boolean State = GetSwitchState(But2);
   if ((But2State == false) && (State == true)) {
-    if (RecordMode==NONE){
-       RecordMode = PLAY;
-        But2State = State; //true
-    }else{
-      RecordMode =NONE;
+    if (RecordMode == NONE) {
+      RecordMode = PLAY;
+      But2State = State; //true
+      CurrentSequenceNum = 0;
+    } else {
+      RecordMode = NONE;
       But2State = State;
+      digitalWrite(ButLED2, false);
     }
-    
+
   }
   if ((But2State == true) && (State == true)) {
     HoldCount++;
     if (HoldCount > 2000) {
-      
-          RecordMode = RECORD;
-          HoldCount = 2001;
+
+      RecordMode = RECORD;
+      HoldCount = 2001;
+      flash(4, ButLED2);
+      CurrentSequenceNum = 0;
     }
-    
+
   }
-  if (State==false){
-     But2State=false;
-     HoldCount=0;
+  if (State == false) {
+    But2State = false;
+    HoldCount = 0;
+
   }
-  
+
 }
 
 void SetPolyMode() {
@@ -170,7 +230,7 @@ void SetPolyMode() {
 int CurrentKeys [MaxPoly];
 
 void loop() {
-
+  FlashLeds();
   SetPolyMode();
   getPortRate();
   getRecordMode();
@@ -184,14 +244,19 @@ void loop() {
 */
 void AssignVoices() {
   int CurrentFinger = 0;
+  if (RecordMode == PLAY){
+    CurrentFinger =1;
+  }
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = CurrentKeys[i];
     if (Key != -1) {
+      
       States[CurrentFinger] = true;
       KeyPressed[CurrentFinger] = Key;       //Record this Key
       CurrentFinger++;
-
+     
+         
     }
   }
 }
@@ -233,15 +298,48 @@ void ScanKeyboard() {
   }
 }
 
-void WriteNotesOut() {
+void SequenceNotesOut() {
   int CurrentFinger = 0;
   int Key = -1;
-  for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
+  for (int i = 0; i < 1; i++) { //Write gate and voltage
     CurrentFinger = i;
 
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
       Key = KeyPressed[CurrentFinger] ;
 
+      digitalWrite(ButLED1, LOW);
+
+      digitalWrite(GateOut[CurrentFinger], false);
+
+
+      KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
+    } else {
+      Key = KeyPressed[CurrentFinger];
+      Octave = (byte)(Key / 12);
+      Note = (byte)(Key % 12);
+      outValue = (int)(Range * (Octave + (float)Note / 12));
+      digitalWrite(ButLED1, HIGH);
+
+      digitalWrite(GateOut[CurrentFinger], true);
+      mcpWrite(outValue, CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
+
+    }
+  }
+}
+
+void WriteNotesOut() {
+
+  int CurrentFinger = 0;
+  int Key = -1;
+  for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
+    if ((RecordMode == PLAY) && (i == 0)) {
+      i++;
+    }
+    CurrentFinger = i;
+
+    if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
+      Key = KeyPressed[CurrentFinger] ;
+      CurrentGates[CurrentFinger] = false;
       digitalWrite(ButLED1, LOW);
       if ( mode != SPLIT) {
         digitalWrite(GateOut[CurrentFinger], false);
@@ -281,7 +379,7 @@ void WriteNotesOut() {
         }
         mcpWrite(CurrentOutValue[CurrentFinger], CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
         digitalWrite(GateOut[CurrentFinger], true);
-
+        CurrentGates[CurrentFinger] = true;
       } else {
         if (Key <= SPLITKEY) {
           digitalWrite(GateOut[0], true);
@@ -339,9 +437,9 @@ void WriteAdd(byte address) {
 void flash(int count, int Button) {
   for (int i = 0; i < count; i++) {
     digitalWrite(Button, HIGH);
-    delay(500);
+    delay(200);
     digitalWrite(Button, LOW);
-    delay(500);
+    delay(200);
 
   }
 }
