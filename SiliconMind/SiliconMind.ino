@@ -50,9 +50,9 @@ int outValue = 0;
 
 
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
-
-int SequenceNotes[128];
-int SequenceGates[128];
+int MAXSEQ=64;
+int SequenceNotes[64];
+int SequenceGates[64];
 int SequenceLength = 0;
 int CurrentSequenceNum = 0;
 
@@ -109,36 +109,33 @@ void setup() {
   delay(500);
   digitalWrite(ButLED1, LOW);
   digitalWrite(ButLED2, LOW);
+  ReadEEProm();
   attachInterrupt(digitalPinToInterrupt(GateInInterrupt), HandleClock, FALLING);
 }
 
-
+int hKey ;
+int hOctave;
+int hNote;
+int houtValue;
 void HandleClock() {
-  //LedState = !LedState;
+ 
   if (RecordMode != NONE) {
     if (RecordMode == PLAY) {
-      //digitalWrite(ButLED1, LedState);
-      LedFlashCount1 = 1;
+sei();
+       LedFlashCount1 = 1;
 
-
-      KeyPressed[0] = SequenceNotes[CurrentSequenceNum];
-      States[0] = SequenceGates[CurrentSequenceNum];
-      //WriteNotesOut();
-
-      int Key = KeyPressed[0];
-      int Octave = (byte)(Key / 12);
-      Note = (byte)(Key % 12);
-      outValue = (int)(Range * (Octave + (float)Note / 12));
-
-
-      digitalWrite(GateOut[0], States[0]);
-      mcpWrite(outValue, 0, 0); //Send the value to the  DAC
-
-      //SequenceNotesOut();
+      hKey = SequenceNotes[CurrentSequenceNum];
+      hOctave = (byte)(hKey / 12);
+      hNote = (byte)(hKey % 12);
+      houtValue = (int)(Range * (hOctave + (float)hNote / 12));
+      digitalWrite(GateOut[0], SequenceGates[CurrentSequenceNum]);
+      mcpWrite(houtValue, 0, 0); //Send the value to the  DAC
       CurrentSequenceNum++;
       if (CurrentSequenceNum >= SequenceLength) {
         CurrentSequenceNum = 0;
       }
+      cli();
+      return;
 
     } else {
       //digitalWrite(ButLED2, LedState);
@@ -186,6 +183,7 @@ void getRecordMode() {
       RecordMode = NONE;
       But2State = State;
       digitalWrite(ButLED2, false);
+      SaveEEProm();
     }
 
   }
@@ -298,34 +296,7 @@ void ScanKeyboard() {
   }
 }
 
-void SequenceNotesOut() {
-  int CurrentFinger = 0;
-  int Key = -1;
-  for (int i = 0; i < 1; i++) { //Write gate and voltage
-    CurrentFinger = i;
 
-    if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
-      Key = KeyPressed[CurrentFinger] ;
-
-      digitalWrite(ButLED1, LOW);
-
-      digitalWrite(GateOut[CurrentFinger], false);
-
-
-      KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
-    } else {
-      Key = KeyPressed[CurrentFinger];
-      Octave = (byte)(Key / 12);
-      Note = (byte)(Key % 12);
-      outValue = (int)(Range * (Octave + (float)Note / 12));
-      digitalWrite(ButLED1, HIGH);
-
-      digitalWrite(GateOut[CurrentFinger], true);
-      mcpWrite(outValue, CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
-
-    }
-  }
-}
 
 void WriteNotesOut() {
 
@@ -407,10 +378,12 @@ void mcpWrite(int value, int DAC, int Channel) {
     data = data | B00110000; //DACA Bit 15 Low
   else
     data = data | B10110000; //DACB Bit 15 High
+  
   SPI.transfer(data);
   data = value;
   SPI.transfer(data);
   // Set digital pin DACCS HIGH
+  
   digitalWrite(DACS[DAC], HIGH);
 
 
@@ -451,5 +424,35 @@ boolean GetSwitchState(int Switch) {
   }
   return false;
 
+}
+
+struct SaveStruct {
+ int SequenceNotes[64];
+int SequenceGates[64];
+int SequenceLength = 0;
+};
+
+ int eeAddress = 0; 
+ SaveStruct SaveNotes ;
+
+void SaveEEProm(){
+   for (int i=0;i<64;i++){
+      SaveNotes.SequenceNotes[i]=SequenceNotes[i];
+      SaveNotes.SequenceGates[i]=SequenceGates[i];
+      
+   }
+   SaveNotes.SequenceLength=SequenceLength;
+   EEPROM.put(eeAddress,SaveNotes);
+   
+}
+
+void ReadEEProm(){
+  EEPROM.get(eeAddress,SaveNotes); 
+  for (int i=0;i<64;i++){
+      SequenceNotes[i]=SaveNotes.SequenceNotes[i];
+      SequenceGates[i]=SaveNotes.SequenceGates[i];
+      
+   }
+   SequenceLength=SaveNotes.SequenceLength;
 }
 
