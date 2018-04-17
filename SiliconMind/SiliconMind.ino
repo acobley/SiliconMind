@@ -19,8 +19,8 @@ int DACS[2] = {10, 9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
-int LedFlashCount1 = 0;
-int LedFlashCount2 = 0;
+volatile int LedFlashCount1 = 0;
+volatile int LedFlashCount2 = 0;
 int But1 = 6;
 int But2 = 7;
 boolean But1State = false;
@@ -51,10 +51,10 @@ int outValue = 0;
 
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
 int MAXSEQ=64;
-int SequenceNotes[64];
-int SequenceGates[64];
-int SequenceLength = 0;
-int CurrentSequenceNum = 0;
+volatile int SequenceNotes[64];
+volatile int SequenceGates[64];
+volatile int SequenceLength = 0;
+volatile int CurrentSequenceNum = 0;
 
 
 /*
@@ -113,15 +113,15 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(GateInInterrupt), HandleClock, FALLING);
 }
 
-int hKey ;
-int hOctave;
-int hNote;
-int houtValue;
+volatile int hKey ;
+volatile int hOctave;
+volatile int hNote;
+volatile int houtValue;
 void HandleClock() {
  
   if (RecordMode != NONE) {
     if (RecordMode == PLAY) {
-sei();
+
        LedFlashCount1 = 1;
 
       hKey = SequenceNotes[CurrentSequenceNum];
@@ -134,7 +134,9 @@ sei();
       if (CurrentSequenceNum >= SequenceLength) {
         CurrentSequenceNum = 0;
       }
-      cli();
+      
+     
+      
       return;
 
     } else {
@@ -144,8 +146,8 @@ sei();
       SequenceGates[CurrentSequenceNum] = CurrentGates[0];
       SequenceLength = CurrentSequenceNum + 1;
       CurrentSequenceNum++;
-      if (CurrentSequenceNum > 127) {
-        CurrentSequenceNum = 127;
+      if (CurrentSequenceNum > MAXSEQ) {
+        CurrentSequenceNum = MAXSEQ;
       }
     }
   }
@@ -241,13 +243,21 @@ void loop() {
    This needs some work, keys will move about voices as notes are added.
 */
 void AssignVoices() {
+  //Find notes this time the same as last and keep a list
+  //Which KeyPressed location are they
+  //for each unassigned note find a location for it.
+  
+  
+  boolean used[MaxPoly]={false,false,false,false};
   int CurrentFinger = 0;
   if (RecordMode == PLAY){
     CurrentFinger =1;
   }
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
+    
     Key = CurrentKeys[i];
+
     if (Key != -1) {
       
       States[CurrentFinger] = true;
@@ -260,6 +270,7 @@ void AssignVoices() {
 }
 void ScanKeyboard() {
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
+   
     States[i] = false;
     CurrentKeys[i] = -1;
   }
@@ -303,9 +314,11 @@ void WriteNotesOut() {
   int CurrentFinger = 0;
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
+    
     if ((RecordMode == PLAY) && (i == 0)) {
       i++;
     }
+    
     CurrentFinger = i;
 
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
@@ -369,7 +382,7 @@ void WriteNotesOut() {
 void mcpWrite(int value, int DAC, int Channel) {
   //CS
 
-  digitalWrite(DACS[DAC], LOW);
+  
   //DAC1 write
   //set top 4 bits of value integer to data variable
   byte data = value >> 8;
@@ -379,13 +392,15 @@ void mcpWrite(int value, int DAC, int Channel) {
   else
     data = data | B10110000; //DACB Bit 15 High
   
+  cli();
+  digitalWrite(DACS[DAC], LOW);
   SPI.transfer(data);
   data = value;
   SPI.transfer(data);
   // Set digital pin DACCS HIGH
   
   digitalWrite(DACS[DAC], HIGH);
-
+sei();
 
 
 }
