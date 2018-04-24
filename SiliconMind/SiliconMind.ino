@@ -37,11 +37,11 @@ float Range = 1365.333; // (2^12/3)
    So Range is steps per Octave
 */
 
-int KeyPressed[MaxPoly+1];
-float CurrentOutValue[MaxPoly+1];
-int CurrentTarget[MaxPoly+1];
-boolean States[MaxPoly+1];
-boolean CurrentGates[MaxPoly+1];
+int KeyPressed[MaxPoly + 1];
+float CurrentOutValue[MaxPoly + 1];
+int CurrentTarget[MaxPoly + 1];
+boolean States[MaxPoly + 1];
+boolean CurrentGates[MaxPoly + 1];
 
 
 byte Octave = -1;
@@ -50,7 +50,7 @@ int outValue = 0;
 
 
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
-int MAXSEQ=64;
+int MAXSEQ = 64;
 volatile int SequenceNotes[64];
 volatile int SequenceGates[64];
 volatile int SequenceLength = 0;
@@ -118,11 +118,11 @@ volatile int hOctave;
 volatile int hNote;
 volatile int houtValue;
 void HandleClock() {
- 
+
   if (RecordMode != NONE) {
     if (RecordMode == PLAY) {
 
-       LedFlashCount1 = 1;
+      LedFlashCount1 = 1;
 
       hKey = SequenceNotes[CurrentSequenceNum];
       hOctave = (byte)(hKey / 12);
@@ -134,9 +134,9 @@ void HandleClock() {
       if (CurrentSequenceNum >= SequenceLength) {
         CurrentSequenceNum = 0;
       }
-      
-     
-      
+
+
+
       return;
 
     } else {
@@ -243,34 +243,85 @@ void loop() {
    This needs some work, keys will move about voices as notes are added.
 */
 void AssignVoices() {
-  //Find notes this time the same as last and keep a list
-  //Which KeyPressed location are they
-  //for each unassigned note find a location for it.
-  
-  
-  boolean used[MaxPoly]={false,false,false,false}; 
-  int CurrentFinger = 0;
-  if (RecordMode == PLAY){
-    CurrentFinger =1;
-  }
   int Key = -1;
+  int KeptFingers[] = { -1, -1, -1, -1};
+  int newKeys[] = { -1, -1, -1, -1};
+
+
+  int ptrKept = 0;//Find notes this time the same as last and keep a list
+  for (int i = 0; i < CurrentPoly; i++) {
+    Key = KeyPressed[i];
+    for (int j = 0; j < CurrentPoly; j++) {
+      if (Key == CurrentKeys[j]) {
+        KeptFingers[ptrKept] = i;
+        ptrKept++;
+        break; //Go onto next key
+      }
+    }
+  }
+  //Find new notes
+  ptrKept = 0;
+  for (int i = 0; i < CurrentPoly; i++) {
+    Key = KeyPressed[i];
+    if (Key != -1) {
+      boolean Found = false;
+      for (int j = 0; j < CurrentPoly; j++) {
+        if (Key == CurrentKeys[j]) {
+          Found = true;
+          break; //Go onto next key
+        }
+
+      }
+      if (Found == false) {
+
+        newKeys[ptrKept] = i;
+        ptrKept++;
+      }
+    }
+  }
+
+  int newKeyPressed[] = { -1, -1, -1, -1};
+  for (int k = 0; k < 4; k++) {
+    if (KeptFingers[k] != -1) {
+      newKeyPressed[KeptFingers[k]] = CurrentKeys[KeptFingers[k]];
+    }
+  }
+  for (int k = 0; k < 4; k++) {
+    if (newKeys[k] != -1) {
+      for (int j = 0; j < 4; j++) { //find a free slot
+        if (newKeyPressed[j] == -1) {
+          newKeyPressed[j] = CurrentKeys[newKeys[k]];
+          break;
+        }
+      }
+    }
+  }
+
+
+
+  int CurrentFinger = 0;
+  if (RecordMode == PLAY) {
+    CurrentFinger = 1;
+  }
+
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
-    
-    Key = CurrentKeys[i];
+
+    Key = newKeyPressed[i];
 
     if (Key != -1) {
-      
+
       States[CurrentFinger] = true;
       KeyPressed[CurrentFinger] = Key;       //Record this Key
       CurrentFinger++;
-     
-         
+
+
     }
   }
+
 }
 void ScanKeyboard() {
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
-   
+
     States[i] = false;
     CurrentKeys[i] = -1;
   }
@@ -314,11 +365,11 @@ void WriteNotesOut() {
   int CurrentFinger = 0;
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
-    
+
     if ((RecordMode == PLAY) && (i == 0)) {
       i++;
     }
-    
+
     CurrentFinger = i;
 
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
@@ -380,10 +431,6 @@ void WriteNotesOut() {
 //Function for writing value to DAC. 0 = Off 4095 = Full on.
 
 void mcpWrite(int value, int DAC, int Channel) {
-  //CS
-
-  
-  //DAC1 write
   //set top 4 bits of value integer to data variable
   byte data = value >> 8;
   data = data & B00001111;
@@ -391,16 +438,15 @@ void mcpWrite(int value, int DAC, int Channel) {
     data = data | B00110000; //DACA Bit 15 Low
   else
     data = data | B10110000; //DACB Bit 15 High
-  
+
   cli();
   digitalWrite(DACS[DAC], LOW);
   SPI.transfer(data);
   data = value;
   SPI.transfer(data);
   // Set digital pin DACCS HIGH
-  
   digitalWrite(DACS[DAC], HIGH);
-sei();
+  sei();
 
 
 }
@@ -442,32 +488,32 @@ boolean GetSwitchState(int Switch) {
 }
 
 struct SaveStruct {
- int SequenceNotes[64];
-int SequenceGates[64];
-int SequenceLength = 0;
+  int SequenceNotes[64];
+  int SequenceGates[64];
+  int SequenceLength = 0;
 };
 
- int eeAddress = 0; 
- SaveStruct SaveNotes ;
+int eeAddress = 0;
+SaveStruct SaveNotes ;
 
-void SaveEEProm(){
-   for (int i=0;i<64;i++){
-      SaveNotes.SequenceNotes[i]=SequenceNotes[i];
-      SaveNotes.SequenceGates[i]=SequenceGates[i];
-      
-   }
-   SaveNotes.SequenceLength=SequenceLength;
-   EEPROM.put(eeAddress,SaveNotes);
-   
+void SaveEEProm() {
+  for (int i = 0; i < 64; i++) {
+    SaveNotes.SequenceNotes[i] = SequenceNotes[i];
+    SaveNotes.SequenceGates[i] = SequenceGates[i];
+
+  }
+  SaveNotes.SequenceLength = SequenceLength;
+  EEPROM.put(eeAddress, SaveNotes);
+
 }
 
-void ReadEEProm(){
-  EEPROM.get(eeAddress,SaveNotes); 
-  for (int i=0;i<64;i++){
-      SequenceNotes[i]=SaveNotes.SequenceNotes[i];
-      SequenceGates[i]=SaveNotes.SequenceGates[i];
-      
-   }
-   SequenceLength=SaveNotes.SequenceLength;
+void ReadEEProm() {
+  EEPROM.get(eeAddress, SaveNotes);
+  for (int i = 0; i < 64; i++) {
+    SequenceNotes[i] = SaveNotes.SequenceNotes[i];
+    SequenceGates[i] = SaveNotes.SequenceGates[i];
+
+  }
+  SequenceLength = SaveNotes.SequenceLength;
 }
 
