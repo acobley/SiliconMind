@@ -262,6 +262,8 @@ void AssignVoices() {
 
   for (int k = 0; k < 4; k++) {
     AssignedKeyPressed[k] = newKeyPressed[k];
+    if (newKeyPressed[k]!=-1)
+      States[k] = true;
   }
 
 }
