@@ -37,12 +37,12 @@ float Range = 1365.333; // (2^12/3)
    So Range is steps per Octave
 */
 
-int KeyPressed[MaxPoly + 1];
+int AssignedKeyPressed[MaxPoly + 1];
 float CurrentOutValue[MaxPoly + 1];
 int CurrentTarget[MaxPoly + 1];
 boolean States[MaxPoly + 1];
 boolean CurrentGates[MaxPoly + 1];
-
+int ScannedKeys [MaxPoly];
 
 byte Octave = -1;
 byte Note = -1;
@@ -84,7 +84,7 @@ void setup() {
     digitalWrite(GateOut[i], false);
 
     States[i] = false;
-    KeyPressed[i] = -1;
+    AssignedKeyPressed[i] = -1;
     CurrentOutValue[i] = 0;
     CurrentTarget[i] = 0;
     CurrentGates[i] = false;
@@ -142,7 +142,7 @@ void HandleClock() {
     } else {
       //digitalWrite(ButLED2, LedState);
       LedFlashCount2 = 1;
-      SequenceNotes[CurrentSequenceNum] = KeyPressed[0];
+      SequenceNotes[CurrentSequenceNum] = AssignedKeyPressed[0];
       SequenceGates[CurrentSequenceNum] = CurrentGates[0];
       SequenceLength = CurrentSequenceNum + 1;
       CurrentSequenceNum++;
@@ -227,7 +227,7 @@ void SetPolyMode() {
   But1State = State;
 }
 
-int CurrentKeys [MaxPoly];
+
 
 void loop() {
   FlashLeds();
@@ -243,87 +243,96 @@ void loop() {
    This needs some work, keys will move about voices as notes are added.
 */
 void AssignVoices() {
+  int newKeyPressed[] = { -1, -1, -1, -1};
+  int CurrentFinger = -1;
+  //Test out last keys to current one
+
   int Key = -1;
+  //Find notes this time the same as last and keep a list
   int KeptFingers[] = { -1, -1, -1, -1};
   int newKeys[] = { -1, -1, -1, -1};
 
+  FindKeptFingers(KeptFingers);
 
-  int ptrKept = 0;//Find notes this time the same as last and keep a list
-  for (int i = 0; i < CurrentPoly; i++) {
-    Key = KeyPressed[i];
-    for (int j = 0; j < CurrentPoly; j++) {
-      if (Key == CurrentKeys[j]) {
-        KeptFingers[ptrKept] = i;
-        ptrKept++;
-        break; //Go onto next key
+  FindNewNotes(newKeys);
+  //report(KeptFingers,newKeys);
+
+  SetKeptKeys(KeptFingers, newKeyPressed);
+  SetNewKeys(newKeys, newKeyPressed);
+
+  for (int k = 0; k < 4; k++) {
+    AssignedKeyPressed[k] = newKeyPressed[k];
+  }
+
+}
+
+
+void SetNewKeys(int newKeys[], int newKeyPressed[]) {
+  for (int k = 0; k < 4; k++) {
+    if (newKeys[k] != -1) {
+      for (int j = 0; j < 4; j++) { //find a free slot
+        if (newKeyPressed[j] == -1) {
+          newKeyPressed[j] = ScannedKeys[newKeys[k]];
+          break;
+        }
       }
     }
   }
+}
+
+void SetKeptKeys(int KeptFingers[], int newKeyPressed[]) {
+  for (int k = 0; k < 4; k++) {
+    if (KeptFingers[k] != -1) {
+      newKeyPressed[KeptFingers[k]] = AssignedKeyPressed[KeptFingers[k]];
+    }
+  }
+}
+
+void FindNewNotes(int newKeys[]) {
   //Find new notes
-  ptrKept = 0;
+  int ptrNew = 0;
+  int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) {
-    Key = KeyPressed[i];
+    Key = ScannedKeys[i];
     if (Key != -1) {
       boolean Found = false;
       for (int j = 0; j < CurrentPoly; j++) {
-        if (Key == CurrentKeys[j]) {
+        if (Key == AssignedKeyPressed[j]) {
           Found = true;
           break; //Go onto next key
         }
 
       }
       if (Found == false) {
-
-        newKeys[ptrKept] = i;
-        ptrKept++;
+        //System.out.println(ptrKept + "   Key " + Key);
+        newKeys[ptrNew] = i;
+        ptrNew++;
       }
     }
   }
-
-  int newKeyPressed[] = { -1, -1, -1, -1};
-  for (int k = 0; k < 4; k++) {
-    if (KeptFingers[k] != -1) {
-      newKeyPressed[KeptFingers[k]] = CurrentKeys[KeptFingers[k]];
-    }
-  }
-  for (int k = 0; k < 4; k++) {
-    if (newKeys[k] != -1) {
-      for (int j = 0; j < 4; j++) { //find a free slot
-        if (newKeyPressed[j] == -1) {
-          newKeyPressed[j] = CurrentKeys[newKeys[k]];
-          break;
-        }
-      }
-    }
-  }
-
-
-
-  int CurrentFinger = 0;
-  if (RecordMode == PLAY) {
-    CurrentFinger = 1;
-  }
-
-  for (int i = 0; i < CurrentPoly; i++) { //Assign voices
-
-    Key = newKeyPressed[i];
-
-    if (Key != -1) {
-
-      States[CurrentFinger] = true;
-      KeyPressed[CurrentFinger] = Key;       //Record this Key
-      CurrentFinger++;
-
-
-    }
-  }
-
 }
+
+void FindKeptFingers(int KeptFingers[]) {
+  int Key = -1;
+  int ptrKept = 0;//Find notes this time the same as last and keep a list
+  for (int i = 0; i < CurrentPoly; i++) {
+    Key = AssignedKeyPressed[i];
+    for (int j = 0; j < CurrentPoly; j++) {
+      if ((Key == ScannedKeys[j]) && (ScannedKeys[j] != -1)) {
+        KeptFingers[ptrKept] = i;
+        ptrKept++;
+        break; //Go onto next key
+      }
+    }
+  }
+}
+
+
 void ScanKeyboard() {
   for (int i = 0; i < MaxPoly; i++) {  //reset scan
 
     States[i] = false;
-    CurrentKeys[i] = -1;
+    ScannedKeys[i] = -1;
   }
   int Key = -1;
   for (int i = 0; i < 8; i++) { //scan keyboard and order them low to high
@@ -337,17 +346,17 @@ void ScanKeyboard() {
         Key = (8 * j) + i;
 
         for (int l = 0; l < MaxPoly; l++) {//This is an sort routine in case the notes do not come in order
-          if (Key > CurrentKeys[l]) {
-            if (CurrentKeys[l] == -1) {
-              CurrentKeys[l] = Key;
+          if (Key > ScannedKeys[l]) {
+            if (ScannedKeys[l] == -1) {
+              ScannedKeys[l] = Key;
               l = MaxPoly;
             }
           } else {
             //Insert it by moving everything up one
             for (int m = (MaxPoly - 2); m >= l; m--) {
-              CurrentKeys[m + 1] = CurrentKeys[m];
+              ScannedKeys[m + 1] = ScannedKeys[m];
             }
-            CurrentKeys[l] = Key;
+            ScannedKeys[l] = Key;
             l = MaxPoly;
           }
 
@@ -373,7 +382,7 @@ void WriteNotesOut() {
     CurrentFinger = i;
 
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
-      Key = KeyPressed[CurrentFinger] ;
+      Key = AssignedKeyPressed[CurrentFinger] ;
       CurrentGates[CurrentFinger] = false;
       digitalWrite(ButLED1, LOW);
       if ( mode != SPLIT) {
@@ -387,9 +396,9 @@ void WriteNotesOut() {
           digitalWrite(GateOut[1], false);
         }
       }
-      KeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
+      AssignedKeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
     } else {
-      Key = KeyPressed[CurrentFinger];
+      Key = AssignedKeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
