@@ -29,7 +29,7 @@ int RecordMode = NONE;
 
 int mode = POLY;
 int DAIN = A1;
-float PortRate = 0.25; //Initial Port
+float PortRate = 0.25; //Initial Portemantau rate 
 float Range = 1365.333; // (2^12/3)
 
 /*
@@ -385,7 +385,7 @@ void WriteNotesOut() {
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
 
-    if ((RecordMode == PLAY) && (i == 0)) {
+    if ((RecordMode == PLAY) && (i == 0)) {//step over the sequenced note.
       i++;
     }
 
