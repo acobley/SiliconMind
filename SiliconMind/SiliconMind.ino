@@ -262,7 +262,7 @@ void AssignVoices() {
 
   for (int k = 0; k < 4; k++) {
     AssignedKeyPressed[k] = newKeyPressed[k];
-    if (newKeyPressed[k]!=-1)
+    if (newKeyPressed[k] != -1)
       States[k] = true;
   }
 
@@ -290,6 +290,7 @@ void SetKeptKeys(int KeptFingers[], int newKeyPressed[]) {
   }
 }
 
+int LastNewNotes[] = { -1, -1, -1, -1};
 void FindNewNotes(int newKeys[]) {
   //Find new notes
   int ptrNew = 0;
@@ -307,8 +308,15 @@ void FindNewNotes(int newKeys[]) {
       }
       if (Found == false) {
         //System.out.println(ptrKept + "   Key " + Key);
-        newKeys[ptrNew] = i;
-        ptrNew++;
+        if (LastNewNotes[ptrNew] != -1) {
+          newKeys[ptrNew] = i;
+          LastNewNotes[ptrNew] = -1;
+          ptrNew++;
+
+        } else {
+          LastNewNotes[ptrNew] = i;
+          ptrNew++;
+        }
       }
     }
   }
