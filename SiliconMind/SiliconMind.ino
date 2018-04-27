@@ -235,13 +235,45 @@ void loop() {
   getPortRate();
   getRecordMode();
   ScanKeyboard();
-  AssignVoices();
+  if (mode != POLY) {
+    AssignMonoVoices();
+  } else {
+    AssignVoices();
+  }
   WriteNotesOut();
 }
 
-/*
-   This needs some work, keys will move about voices as notes are added.
-*/
+
+
+void AssignMonoVoices() {
+  //Find notes this time the same as last and keep a list
+  //Which KeyPressed location are they
+  //for each unassigned note find a location for it.
+
+
+  boolean used[MaxPoly] = {false, false, false, false};
+  int CurrentFinger = 0;
+  if (RecordMode == PLAY) {
+    CurrentFinger = 1;
+  }
+  int Key = -1;
+  for (int i = 0; i < CurrentPoly; i++) { //Assign voices
+
+    Key = ScannedKeys[i];
+
+    if (Key != -1) {
+
+      States[CurrentFinger] = true;
+      AssignedKeyPressed[CurrentFinger] = Key;       //Record this Key
+      CurrentFinger++;
+
+
+    }
+  }
+}
+
+
+
 void AssignVoices() {
   int newKeyPressed[] = { -1, -1, -1, -1};
   int CurrentFinger = -1;
