@@ -273,6 +273,7 @@ void AssignMonoVoices() {
 }
 
 
+//This is for polyphonic mode
 
 void AssignVoices() {
   int newKeyPressed[] = { -1, -1, -1, -1};
