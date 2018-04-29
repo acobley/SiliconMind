@@ -323,7 +323,7 @@ void SetKeptKeys(int KeptFingers[], int newKeyPressed[]) {
   }
 }
 
-int LastNewNotes[] = { -1, -1, -1, -1};
+
 void FindNewNotes(int newKeys[]) {
   //Find new notes
   int ptrNew = 0;
@@ -341,15 +341,12 @@ void FindNewNotes(int newKeys[]) {
       }
       if (Found == false) {
         //System.out.println(ptrKept + "   Key " + Key);
-        if (LastNewNotes[ptrNew] != -1) {
+ 
           newKeys[ptrNew] = i;
-          LastNewNotes[ptrNew] = -1;
+         
           ptrNew++;
 
-        } else {
-          LastNewNotes[ptrNew] = i;
-          ptrNew++;
-        }
+        
       }
     }
   }
