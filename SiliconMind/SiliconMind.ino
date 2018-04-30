@@ -251,7 +251,7 @@ void AssignMonoVoices() {
   //for each unassigned note find a location for it.
 
 
-  boolean used[MaxPoly] = {false, false, false, false};
+ 
   int CurrentFinger = 0;
   if (RecordMode == PLAY) {
     CurrentFinger = 1;
