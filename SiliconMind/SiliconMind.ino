@@ -258,16 +258,11 @@ void AssignMonoVoices() {
   }
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
-
     Key = ScannedKeys[i];
-
     if (Key != -1) {
-
       States[CurrentFinger] = true;
       AssignedKeyPressed[CurrentFinger] = Key;       //Record this Key
       CurrentFinger++;
-
-
     }
   }
 }
