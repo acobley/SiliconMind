@@ -66,7 +66,9 @@ void calcRange() {
 }
 
 void getPortRate() {//  This needs some work to get a full range
-  PortRate = (float)(analogRead(A0) / 1024.0) * 250;
+  float Val=(float)(analogRead(A0) / 1024.0);
+  Val=Val*Val*Val;
+  PortRate = (float)(Val) * 250;
 
 }
 
@@ -249,9 +251,6 @@ void AssignMonoVoices() {
   //Find notes this time the same as last and keep a list
   //Which KeyPressed location are they
   //for each unassigned note find a location for it.
-
-
- 
   int CurrentFinger = 0;
   if (RecordMode == PLAY) {
     CurrentFinger = 1;
