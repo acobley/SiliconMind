@@ -65,9 +65,9 @@ void calcRange() {
 
 }
 
-void getPortRate() {//  This needs some work to get a full range
+void getPortRate() {
   float Val=(float)(analogRead(A0) / 1024.0);
-  Val=Val*Val*Val;
+  Val=Val*Val*Val; //Create a cubic curve
   PortRate = (float)(Val) * 250;
 
 }
