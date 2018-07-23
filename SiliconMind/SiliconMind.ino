@@ -65,6 +65,7 @@ void calcRange() {
 
 }
 
+//gets the portamento rate
 void getPortRate() {
   float Val=(float)(analogRead(A0) / 1024.0);
   Val=Val*Val*Val; //Create a cubic curve
@@ -414,7 +415,8 @@ void WriteNotesOut() {
     }
 
     CurrentFinger = i;
-
+    Key = AssignedKeyPressed[CurrentFinger];
+    
     if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
       Key = AssignedKeyPressed[CurrentFinger] ;
       CurrentGates[CurrentFinger] = false;
@@ -432,7 +434,7 @@ void WriteNotesOut() {
       }
       AssignedKeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
     } else {
-      Key = AssignedKeyPressed[CurrentFinger];
+      
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
