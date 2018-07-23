@@ -29,7 +29,7 @@ int RecordMode = NONE;
 
 int mode = POLY;
 int DAIN = A1;
-float PortRate = 0.25; //Initial Portemantau rate 
+float PortRate = 0.25; //Initial Portemantau rate
 float Range = 1365.333; // (2^12/3)
 
 /*
@@ -67,8 +67,8 @@ void calcRange() {
 
 //gets the portamento rate
 void getPortRate() {
-  float Val=(float)(analogRead(A0) / 1024.0);
-  Val=Val*Val*Val; //Create a cubic curve
+  float Val = (float)(analogRead(A0) / 1024.0);
+  Val = Val * Val * Val; //Create a cubic curve
   PortRate = (float)(Val) * 250;
 
 }
@@ -259,11 +259,11 @@ void AssignMonoVoices() {
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = ScannedKeys[i];
-    if (Key != -1) {
+    //if (Key != -1) {
       States[CurrentFinger] = true;
       AssignedKeyPressed[CurrentFinger] = Key;       //Record this Key
       CurrentFinger++;
-    }
+    //}
   }
 }
 
@@ -336,12 +336,12 @@ void FindNewNotes(int newKeys[]) {
       }
       if (Found == false) {
         //System.out.println(ptrKept + "   Key " + Key);
- 
-          newKeys[ptrNew] = i;
-         
-          ptrNew++;
 
-        
+        newKeys[ptrNew] = i;
+
+        ptrNew++;
+
+
       }
     }
   }
@@ -416,25 +416,7 @@ void WriteNotesOut() {
 
     CurrentFinger = i;
     Key = AssignedKeyPressed[CurrentFinger];
-    
-    if (States[CurrentFinger] == false) {  //No Key was pressed this time round Deal with Gates
-      Key = AssignedKeyPressed[CurrentFinger] ;
-      CurrentGates[CurrentFinger] = false;
-      digitalWrite(ButLED1, LOW);
-      if ( mode != SPLIT) {
-        digitalWrite(GateOut[CurrentFinger], false);
-
-      } else {
-        if (Key <= SPLITKEY) {
-
-          digitalWrite(GateOut[0], false);
-        } else {
-          digitalWrite(GateOut[1], false);
-        }
-      }
-      AssignedKeyPressed[CurrentFinger] = -1;        //Set the KeyPressed to a default value
-    } else {
-      
+    if (Key != -1) {
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
@@ -467,6 +449,24 @@ void WriteNotesOut() {
         } else {
           digitalWrite(GateOut[1], true);
           mcpWrite(outValue, 0, 1); //Send the value to the  Out 1
+        }
+      }
+
+    }
+
+    else {
+      Key = AssignedKeyPressed[CurrentFinger] ;
+      CurrentGates[CurrentFinger] = false;
+      digitalWrite(ButLED1, LOW);
+      if ( mode != SPLIT) {
+        digitalWrite(GateOut[CurrentFinger], false);
+
+      } else {
+        if (Key <= SPLITKEY) {
+
+          digitalWrite(GateOut[0], false);
+        } else {
+          digitalWrite(GateOut[1], false);
         }
       }
     }
