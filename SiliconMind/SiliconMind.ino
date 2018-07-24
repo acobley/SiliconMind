@@ -138,11 +138,7 @@ void HandleClock() {
       if (CurrentSequenceNum >= SequenceLength) {
         CurrentSequenceNum = 0;
       }
-
-
-
       return;
-
     } else {
       //digitalWrite(ButLED2, LedState);
       LedFlashCount2 = 1;
@@ -423,8 +419,7 @@ void WriteNotesOut() {
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
       digitalWrite(ButLED1, HIGH);
-      if ( mode != SPLIT) {
-        /* Most of this deals with Portemantau
+      /* Most of this deals with Portemantau
 
         */
         CurrentTarget[CurrentFinger] = outValue;
@@ -441,6 +436,8 @@ void WriteNotesOut() {
           if (CurrentOutValue[CurrentFinger] <= CurrentTarget[CurrentFinger])
             CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
         }
+      if ( mode != SPLIT) {
+        
         mcpWrite(CurrentOutValue[CurrentFinger], CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
         digitalWrite(GateOut[CurrentFinger], true);
         CurrentGates[CurrentFinger] = true;
@@ -451,7 +448,7 @@ void WriteNotesOut() {
           mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
         } else {
           digitalWrite(GateOut[1], true);
-          mcpWrite(outValue, 0, 1); //Send the value to the  Out 1
+          mcpWrite(CurrentOutValue[CurrentFinger], 0, 1); //Send the value to the  Out 1
         }
          
       }
