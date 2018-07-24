@@ -43,6 +43,7 @@ int CurrentTarget[MaxPoly + 1];
 boolean States[MaxPoly + 1];
 boolean CurrentGates[MaxPoly + 1];
 int ScannedKeys [MaxPoly];
+int LastKeys[MaxPoly + 1];
 
 byte Octave = -1;
 byte Note = -1;
@@ -417,6 +418,7 @@ void WriteNotesOut() {
     CurrentFinger = i;
     Key = AssignedKeyPressed[CurrentFinger];
     if (Key != -1) {
+      LastKeys[CurrentFinger]= AssignedKeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
@@ -443,6 +445,7 @@ void WriteNotesOut() {
         digitalWrite(GateOut[CurrentFinger], true);
         CurrentGates[CurrentFinger] = true;
       } else {
+        
         if (Key <= SPLITKEY) {
           digitalWrite(GateOut[0], true);
           mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
@@ -450,24 +453,28 @@ void WriteNotesOut() {
           digitalWrite(GateOut[1], true);
           mcpWrite(outValue, 0, 1); //Send the value to the  Out 1
         }
+         
       }
 
     }
 
     else {
-      Key = AssignedKeyPressed[CurrentFinger] ;
+      Key= LastKeys[CurrentFinger];
       CurrentGates[CurrentFinger] = false;
       digitalWrite(ButLED1, LOW);
       if ( mode != SPLIT) {
         digitalWrite(GateOut[CurrentFinger], false);
 
       } else {
-        if (Key <= SPLITKEY) {
+        if ((Key <= SPLITKEY) && (Key >=0)){
 
           digitalWrite(GateOut[0], false);
-        } else {
-          digitalWrite(GateOut[1], false);
         }
+        if ((Key > SPLITKEY) && (Key >=0)){
+          digitalWrite(GateOut[1], false);
+          }
+        
+        LastKeys[CurrentFinger]=-1;
       }
     }
   }
