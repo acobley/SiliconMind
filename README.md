@@ -52,12 +52,12 @@ Pure Keys aec-pcb2.
                    Changes in pcb1 are rolled into this
                    Pure Keys aec-pcb2 In Progress
 
-Pure Keys aec-pcb3-inProgress (obsolite)
+Pure Keys aec-pcb3-inProgress (obsolete)
 
 	Next design in progress
 	     	    Changes from pcb2 are rolled into this 
 		    
-Pure Keys aec-pcb3-smd-inProgress (obsolite)
+Pure Keys aec-pcb3-smd-inProgress 
 
 	SMD version.   Next design in progress
 	     	    Changes from pcb2 are rolled into this 
