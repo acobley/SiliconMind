@@ -16374,7 +16374,7 @@ Based on the following sources:
 <part name="R56" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
 <part name="BUT2" library="INSTRUO" deviceset="PB6149L-5" device=""/>
 <part name="R2" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
-<part name="T1" library="INSTRUO" deviceset="TRANSISTOR_MMBT3904" device="" value="2N3904"/>
+<part name="CLOCK" library="INSTRUO" deviceset="TRANSISTOR_MMBT3904" device="" value="2N3904"/>
 <part name="GND11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="R5" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="SUPPLY9" library="supply2" deviceset="+5V" device=""/>
@@ -16383,7 +16383,7 @@ Based on the following sources:
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="CLK_IN" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
 <part name="GND13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U2" library="GMSN-R2Project" deviceset="LM4040A30IDBZT" device="" value="LM4040">
+<part name="REF" library="GMSN-R2Project" deviceset="LM4040A30IDBZT" device="" value="LM4040">
 <attribute name="MPN" value="LM4040A30IDBZT"/>
 <attribute name="RS-PART" value="809-6343"/>
 </part>
@@ -16432,7 +16432,7 @@ Based on the following sources:
 </part>
 <part name="74238" library="GMSN-R2Project" deviceset="74HC238D" device="N"/>
 <part name="R29" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
-<part name="IC1" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*04" device="D" package3d_urn="urn:adsk.eagle:package:1010/2" technology="AC"/>
+<part name="INVERTOR" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*04" device="D" package3d_urn="urn:adsk.eagle:package:1010/2" technology="AC"/>
 </parts>
 <sheets>
 <sheet>
@@ -16458,8 +16458,8 @@ Based on the following sources:
 <instance part="74238" gate="/+UB" x="111.76" y="149.86"/>
 <instance part="74238" gate="/-UB" x="111.76" y="121.92"/>
 <instance part="R29" gate="G$1" x="114.3" y="137.16" rot="R90"/>
-<instance part="IC1" gate="A" x="132.08" y="91.44"/>
-<instance part="IC1" gate="P" x="165.1" y="93.98"/>
+<instance part="INVERTOR" gate="A" x="132.08" y="91.44"/>
+<instance part="INVERTOR" gate="P" x="165.1" y="93.98"/>
 </instances>
 <busses>
 </busses>
@@ -16549,7 +16549,7 @@ Based on the following sources:
 <label x="137.16" y="116.84" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="P" pin="GND"/>
+<pinref part="INVERTOR" gate="P" pin="GND"/>
 <wire x1="165.1" y1="86.36" x2="165.1" y2="83.82" width="0.1524" layer="91"/>
 <label x="165.1" y="83.82" size="1.778" layer="95"/>
 </segment>
@@ -16606,7 +16606,7 @@ Based on the following sources:
 </net>
 <net name="CS2" class="0">
 <segment>
-<pinref part="IC1" gate="A" pin="O"/>
+<pinref part="INVERTOR" gate="A" pin="O"/>
 <wire x1="142.24" y1="91.44" x2="147.32" y2="91.44" width="0.1524" layer="91"/>
 <label x="147.32" y="91.44" size="1.778" layer="95"/>
 </segment>
@@ -16671,7 +16671,7 @@ Based on the following sources:
 <label x="114.3" y="144.78" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="P" pin="VCC"/>
+<pinref part="INVERTOR" gate="P" pin="VCC"/>
 <wire x1="165.1" y1="101.6" x2="165.1" y2="104.14" width="0.1524" layer="91"/>
 <label x="165.1" y="104.14" size="1.778" layer="95"/>
 </segment>
@@ -16718,7 +16718,7 @@ Based on the following sources:
 <wire x1="104.14" y1="114.3" x2="104.14" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="91.44" x2="104.14" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="68.58" x2="142.24" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="IC1" gate="A" pin="I"/>
+<pinref part="INVERTOR" gate="A" pin="I"/>
 <wire x1="104.14" y1="91.44" x2="121.92" y2="91.44" width="0.1524" layer="91"/>
 <junction x="104.14" y="91.44"/>
 <label x="142.24" y="68.58" size="1.778" layer="95"/>
@@ -17041,6 +17041,13 @@ Based on the following sources:
 <pinref part="74238" gate="1" pin="G1"/>
 </segment>
 </net>
+<net name="BUTLED3" class="0">
+<segment>
+<pinref part="U1" gate="U$1" pin="PB1(OC1A)"/>
+<wire x1="66.04" y1="116.84" x2="68.58" y2="116.84" width="0.1524" layer="91"/>
+<label x="68.58" y="116.84" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
@@ -17050,7 +17057,7 @@ Based on the following sources:
 <instances>
 <instance part="C4" gate="G$1" x="43.18" y="43.18"/>
 <instance part="JP2" gate="G$1" x="25.4" y="38.1" rot="MR0"/>
-<instance part="U2" gate="A" x="119.38" y="40.64" rot="R90">
+<instance part="REF" gate="A" x="119.38" y="40.64" rot="R90">
 <attribute name="RS-PART" x="119.38" y="40.64" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="R3" gate="G$1" x="119.38" y="58.42" rot="R90"/>
@@ -17085,7 +17092,7 @@ Based on the following sources:
 <label x="55.88" y="38.1" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U2" gate="A" pin="ANODE"/>
+<pinref part="REF" gate="A" pin="ANODE"/>
 <wire x1="119.38" y1="35.56" x2="119.38" y2="30.48" width="0.1524" layer="91"/>
 <label x="119.38" y="30.48" size="1.778" layer="95" rot="R180"/>
 </segment>
@@ -17093,7 +17100,7 @@ Based on the following sources:
 <net name="3VREF" class="0">
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
-<pinref part="U2" gate="A" pin="CATHODE"/>
+<pinref part="REF" gate="A" pin="CATHODE"/>
 <wire x1="119.38" y1="53.34" x2="119.38" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="48.26" x2="119.38" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="48.26" x2="124.46" y2="48.26" width="0.1524" layer="91"/>
@@ -18135,7 +18142,7 @@ Based on the following sources:
 <plain>
 </plain>
 <instances>
-<instance part="T1" gate="G$1" x="106.68" y="91.44" rot="R90"/>
+<instance part="CLOCK" gate="G$1" x="106.68" y="91.44" rot="R90"/>
 <instance part="GND11" gate="1" x="111.76" y="73.66" rot="MR0"/>
 <instance part="R5" gate="G$1" x="111.76" y="114.3" rot="MR90"/>
 <instance part="SUPPLY9" gate="+5V" x="111.76" y="124.46" rot="MR0"/>
@@ -18150,7 +18157,7 @@ Based on the following sources:
 <nets>
 <net name="GND" class="1">
 <segment>
-<pinref part="T1" gate="G$1" pin="E"/>
+<pinref part="CLOCK" gate="G$1" pin="E"/>
 <wire x1="111.76" y1="78.74" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
 <pinref part="GND11" gate="1" pin="GND"/>
 </segment>
@@ -18175,7 +18182,7 @@ Based on the following sources:
 </net>
 <net name="CLK_IN" class="0">
 <segment>
-<pinref part="T1" gate="G$1" pin="C"/>
+<pinref part="CLOCK" gate="G$1" pin="C"/>
 <pinref part="R5" gate="G$1" pin="1"/>
 <wire x1="111.76" y1="109.22" x2="111.76" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="111.76" y1="106.68" x2="111.76" y2="104.14" width="0.1524" layer="91"/>
@@ -18190,7 +18197,7 @@ Based on the following sources:
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="83.82" y1="91.44" x2="88.9" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="91.44" x2="88.9" y2="88.9" width="0.1524" layer="91"/>
-<pinref part="T1" gate="G$1" pin="B"/>
+<pinref part="CLOCK" gate="G$1" pin="B"/>
 <wire x1="93.98" y1="91.44" x2="88.9" y2="91.44" width="0.1524" layer="91"/>
 <junction x="88.9" y="91.44"/>
 </segment>
