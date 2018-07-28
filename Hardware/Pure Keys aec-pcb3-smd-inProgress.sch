@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.0.1">
+<eagle version="9.1.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -16392,7 +16392,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="GND"/>
 <wire x1="78.74" y1="68.58" x2="81.28" y2="68.58" width="0.1524" layer="91"/>
@@ -16556,7 +16556,7 @@ Based on the following sources:
 <label x="147.32" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="5V" class="1">
+<net name="5V" class="0">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="VCC"/>
 <wire x1="78.74" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
@@ -17014,7 +17014,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="5V" class="1">
+<net name="5V" class="0">
 <segment>
 <pinref part="JP2" gate="G$1" pin="VBUS"/>
 <wire x1="27.94" y1="40.64" x2="33.02" y2="40.64" width="0.1524" layer="91"/>
@@ -17031,7 +17031,7 @@ Based on the following sources:
 <label x="119.38" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="JP2" gate="G$1" pin="GND"/>
 <pinref part="C4" gate="G$1" pin="-"/>
@@ -17325,7 +17325,7 @@ Based on the following sources:
 <pinref part="R13" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="20.32" y1="10.16" x2="20.32" y2="12.7" width="0.1524" layer="91"/>
@@ -17429,7 +17429,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="MCP6004-TRIG" gate="P" pin="V-"/>
 <wire x1="119.38" y1="22.86" x2="119.38" y2="17.78" width="0.1524" layer="91"/>
@@ -17497,7 +17497,7 @@ Based on the following sources:
 <pinref part="MCP6004-TRIG" gate="A" pin="+IN"/>
 </segment>
 </net>
-<net name="5V" class="1">
+<net name="5V" class="0">
 <segment>
 <pinref part="C3" gate="G$1" pin="1"/>
 <pinref part="MCP6004-TRIG" gate="P" pin="V+"/>
@@ -17607,7 +17607,7 @@ Based on the following sources:
 <label x="10.16" y="25.4" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="5V" class="1">
+<net name="5V" class="0">
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="27.94" y1="-10.16" x2="27.94" y2="-7.62" width="0.1524" layer="91"/>
@@ -17764,7 +17764,7 @@ Based on the following sources:
 <junction x="147.32" y="104.14"/>
 </segment>
 </net>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="CV4" gate="G$1" pin="SLEEVE"/>
 <wire x1="157.48" y1="2.54" x2="154.94" y2="2.54" width="0.1524" layer="91"/>
@@ -17909,7 +17909,7 @@ Based on the following sources:
 <label x="2.54" y="35.56" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="GLIDE1" gate="G$1" pin="3"/>
 <wire x1="12.7" y1="27.94" x2="12.7" y2="30.48" width="0.1524" layer="91"/>
@@ -17967,7 +17967,7 @@ Based on the following sources:
 <label x="76.2" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="5V" class="1">
+<net name="5V" class="0">
 <segment>
 <pinref part="GLIDE1" gate="G$1" pin="1"/>
 <wire x1="12.7" y1="43.18" x2="12.7" y2="40.64" width="0.1524" layer="91"/>
@@ -18102,7 +18102,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="5V" class="1">
+<net name="5V" class="0">
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="111.76" y1="121.92" x2="111.76" y2="119.38" width="0.1524" layer="91"/>
@@ -18138,7 +18138,7 @@ Based on the following sources:
 <wire x1="66.04" y1="91.44" x2="73.66" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GND" class="1">
+<net name="GND" class="0">
 <segment>
 <pinref part="CLOCK" gate="G$1" pin="E"/>
 <wire x1="111.76" y1="78.74" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
