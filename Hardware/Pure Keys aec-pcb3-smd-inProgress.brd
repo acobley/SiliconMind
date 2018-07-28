@@ -3,7 +3,7 @@
 <eagle version="9.1.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="50" unitdist="mil" unit="mm" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -158,17 +158,18 @@
 <layer number="255" name="routoute" color="7" fill="1" visible="no" active="yes"/>
 </layers>
 <board>
+<fusionsync huburn="a.cGVyc29uYWw6dWUyYjcyYjhk" projecturn="a.cGVyc29uYWw6dWUyYjcyYjhkIzIwMTgwMzMxMTI1NDI1ODAx" f3durn="urn:adsk.wipprod:dm.lineage:GiBeiiCMS92ebt5DWTYfzA" pcbguid="e62dc527-8954-4e3e-9269-dedffcad4fd1" lastpulledtime="" lastsyncedchangeguid="8955e233-5770-4a84-845a-27ef04c7797a"/>
 <plain>
 <wire x1="0" y1="-6.35" x2="158.73" y2="-6.35" width="0" layer="20"/>
 <wire x1="158.73" y1="-6.35" x2="158.73" y2="45.39" width="0" layer="20"/>
 <wire x1="158.73" y1="45.39" x2="0" y2="45.39" width="0" layer="20"/>
 <wire x1="0" y1="45.39" x2="0" y2="-6.35" width="0" layer="20"/>
-<text x="144.78" y="13.97" size="1.778" layer="26" rot="MR0">Pure Keys
+<text x="36.83" y="27.94" size="1.778" layer="26" rot="MR0">Pure Keys
 Dev Board 
 PCB 3 SMD
 GMSN! and
 Andy C</text>
-<text x="189.23" y="86.36" size="1.778" layer="26" rot="MR0">KeyBoard
+<text x="12.7" y="35.56" size="1.778" layer="26" rot="MR0">KeyBoard
 Controller</text>
 </plain>
 <libraries>
@@ -4340,6 +4341,11 @@ which will not be processed correctly with this version.
 Since Version 8.2, EAGLE supports online libraries. The ids
 of those online libraries will not be understood (or retained)
 with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports Fusion synchronisation.
+This feature will not be available in this version and saving
+the document will break the link to the Fusion PCB feature.
 </note>
 <note version="8.3" severity="warning">
 Since Version 8.3, EAGLE supports URNs for individual library
