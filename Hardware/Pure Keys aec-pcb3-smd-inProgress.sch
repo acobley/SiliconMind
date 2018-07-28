@@ -15045,74 +15045,6 @@ Pin rows are offset 5mm as well
 </deviceset>
 </devicesets>
 </library>
-<library name="supply1" urn="urn:adsk.eagle:library:371">
-<description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
- GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
- Please keep in mind, that these devices are necessary for the
- automatic wiring of the supply signals.&lt;p&gt;
- The pin name defined in the symbol is identical to the net which is to be wired automatically.&lt;p&gt;
- In this library the device names are the same as the pin names of the symbols, therefore the correct signal names appear next to the supply symbols in the schematic.&lt;p&gt;
- &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-</packages>
-<symbols>
-<symbol name="GND" urn="urn:adsk.eagle:symbol:26925/1" library_version="1">
-<wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
-<text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="GND" x="0" y="2.54" visible="off" length="short" direction="sup" rot="R270"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="GND" urn="urn:adsk.eagle:component:26954/1" prefix="GND" library_version="1">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="GND" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
-<library name="supply2">
-<description>&lt;b&gt;Supply Symbols&lt;/b&gt;&lt;p&gt;
-GND, VCC, 0V, +5V, -5V, etc.&lt;p&gt;
-Please keep in mind, that these devices are necessary for the
-automatic wiring of the supply signals.&lt;p&gt;
-The pin name defined in the symbol is identical to the net which is to be wired automatically.&lt;p&gt;
-In this library the device names are the same as the pin names of the symbols, therefore the correct signal names appear next to the supply symbols in the schematic.&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-</packages>
-<symbols>
-<symbol name="+05V">
-<wire x1="-0.635" y1="1.27" x2="0.635" y2="1.27" width="0.1524" layer="94"/>
-<wire x1="0" y1="0.635" x2="0" y2="1.905" width="0.1524" layer="94"/>
-<circle x="0" y="1.27" radius="1.27" width="0.254" layer="94"/>
-<text x="-1.905" y="3.175" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="+5V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="+5V" prefix="SUPPLY">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="+5V" symbol="+05V" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="GMSN-R2Project">
 <packages>
 <package name="DIL14">
@@ -16375,14 +16307,10 @@ Based on the following sources:
 <part name="BUT2" library="INSTRUO" deviceset="PB6149L-5" device=""/>
 <part name="R2" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
 <part name="CLOCK" library="INSTRUO" deviceset="TRANSISTOR_MMBT3904" device="" value="2N3904"/>
-<part name="GND11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="R5" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
-<part name="SUPPLY9" library="supply2" deviceset="+5V" device=""/>
 <part name="R6" library="rcl" deviceset="R-US_" device="R0805" value="100K"/>
 <part name="R7" library="rcl" deviceset="R-US_" device="R0805" value="1M"/>
-<part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="CLK_IN" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
-<part name="GND13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="REF" library="GMSN-R2Project" deviceset="LM4040A30IDBZT" device="" value="LM4040">
 <attribute name="MPN" value="LM4040A30IDBZT"/>
 <attribute name="RS-PART" value="809-6343"/>
@@ -16494,16 +16422,6 @@ Based on the following sources:
 <label x="25.4" y="27.94" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<wire x1="17.78" y1="111.76" x2="15.24" y2="111.76" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="111.76" x2="15.24" y2="109.22" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="109.22" x2="17.78" y2="109.22" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="109.22" x2="12.7" y2="109.22" width="0.1524" layer="91"/>
-<junction x="15.24" y="109.22"/>
-<label x="12.7" y="109.22" size="1.778" layer="95" rot="R180"/>
-<pinref part="U1" gate="U$1" pin="GND@3"/>
-<pinref part="U1" gate="U$1" pin="GND@5"/>
-</segment>
-<segment>
 <pinref part="C17" gate="G$1" pin="2"/>
 <wire x1="-5.08" y1="142.24" x2="-10.16" y2="142.24" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="142.24" x2="-10.16" y2="132.08" width="0.1524" layer="91"/>
@@ -16553,6 +16471,35 @@ Based on the following sources:
 <wire x1="165.1" y1="86.36" x2="165.1" y2="83.82" width="0.1524" layer="91"/>
 <label x="165.1" y="83.82" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="75151-2" gate="A" pin="D5"/>
+<wire x1="208.28" y1="96.52" x2="205.74" y2="96.52" width="0.1524" layer="91"/>
+<label x="198.12" y="96.52" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="75151-2" gate="A" pin="D6"/>
+<wire x1="208.28" y1="93.98" x2="205.74" y2="93.98" width="0.1524" layer="91"/>
+<label x="198.12" y="93.98" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="75151-2" gate="A" pin="D7"/>
+<wire x1="208.28" y1="91.44" x2="205.74" y2="91.44" width="0.1524" layer="91"/>
+<label x="198.12" y="91.44" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U1" gate="U$1" pin="GND@5"/>
+<wire x1="17.78" y1="109.22" x2="15.24" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="U1" gate="U$1" pin="GND@3"/>
+<wire x1="15.24" y1="109.22" x2="10.16" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="111.76" x2="15.24" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="111.76" x2="15.24" y2="109.22" width="0.1524" layer="91"/>
+<junction x="15.24" y="109.22"/>
+<pinref part="U1" gate="U$1" pin="AGND"/>
+<wire x1="17.78" y1="114.3" x2="15.24" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="114.3" x2="15.24" y2="111.76" width="0.1524" layer="91"/>
+<junction x="15.24" y="111.76"/>
+<label x="10.16" y="109.22" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="RST" class="0">
 <segment>
@@ -16562,10 +16509,8 @@ Based on the following sources:
 </segment>
 <segment>
 <label x="15.24" y="165.1" size="1.778" layer="95" rot="R180"/>
-<wire x1="20.32" y1="165.1" x2="17.78" y2="165.1" width="0.1524" layer="91"/>
 <pinref part="U1" gate="U$1" pin="PC6(/RESET)"/>
 <wire x1="17.78" y1="165.1" x2="15.24" y2="165.1" width="0.1524" layer="91"/>
-<junction x="17.78" y="165.1"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -16641,16 +16586,6 @@ Based on the following sources:
 <label x="25.4" y="55.88" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="17.78" y1="160.02" x2="15.24" y2="160.02" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="157.48" x2="15.24" y2="157.48" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="157.48" x2="15.24" y2="160.02" width="0.1524" layer="91"/>
-<junction x="15.24" y="160.02"/>
-<label x="12.7" y="160.02" size="1.778" layer="95" rot="R180"/>
-<wire x1="15.24" y1="160.02" x2="12.7" y2="160.02" width="0.1524" layer="91"/>
-<pinref part="U1" gate="U$1" pin="VCC@4"/>
-<pinref part="U1" gate="U$1" pin="AVCC"/>
-</segment>
-<segment>
 <pinref part="74151-1" gate="P" pin="VCC"/>
 <wire x1="256.54" y1="162.56" x2="256.54" y2="165.1" width="0.1524" layer="91"/>
 <label x="256.54" y="165.1" size="1.778" layer="95"/>
@@ -16674,6 +16609,20 @@ Based on the following sources:
 <pinref part="INVERTOR" gate="P" pin="VCC"/>
 <wire x1="165.1" y1="101.6" x2="165.1" y2="104.14" width="0.1524" layer="91"/>
 <label x="165.1" y="104.14" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U1" gate="U$1" pin="AVCC"/>
+<wire x1="17.78" y1="160.02" x2="15.24" y2="160.02" width="0.1524" layer="91"/>
+<pinref part="U1" gate="U$1" pin="VCC@6"/>
+<wire x1="15.24" y1="160.02" x2="12.7" y2="160.02" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="154.94" x2="15.24" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="154.94" x2="15.24" y2="157.48" width="0.1524" layer="91"/>
+<junction x="15.24" y="160.02"/>
+<pinref part="U1" gate="U$1" pin="VCC@4"/>
+<wire x1="15.24" y1="157.48" x2="15.24" y2="160.02" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="157.48" x2="15.24" y2="157.48" width="0.1524" layer="91"/>
+<junction x="15.24" y="157.48"/>
+<label x="7.62" y="160.02" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="MK4" class="0">
@@ -17995,6 +17944,7 @@ Based on the following sources:
 <wire x1="99.06" y1="73.66" x2="104.14" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
 <junction x="99.06" y="73.66"/>
+<label x="73.66" y="73.66" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="GATE" gate="G$1" pin="3"/>
@@ -18014,6 +17964,7 @@ Based on the following sources:
 <wire x1="99.06" y1="116.84" x2="104.14" y2="116.84" width="0.1524" layer="91"/>
 <wire x1="99.06" y1="116.84" x2="81.28" y2="116.84" width="0.1524" layer="91"/>
 <junction x="99.06" y="116.84"/>
+<label x="76.2" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="5V" class="1">
@@ -18143,41 +18094,19 @@ Based on the following sources:
 </plain>
 <instances>
 <instance part="CLOCK" gate="G$1" x="106.68" y="91.44" rot="R90"/>
-<instance part="GND11" gate="1" x="111.76" y="73.66" rot="MR0"/>
 <instance part="R5" gate="G$1" x="111.76" y="114.3" rot="MR90"/>
-<instance part="SUPPLY9" gate="+5V" x="111.76" y="124.46" rot="MR0"/>
 <instance part="R6" gate="G$1" x="78.74" y="91.44" rot="MR0"/>
 <instance part="R7" gate="G$1" x="88.9" y="83.82" rot="MR90"/>
-<instance part="GND12" gate="1" x="88.9" y="73.66" rot="MR0"/>
 <instance part="CLK_IN" gate="G$1" x="60.96" y="88.9" rot="MR0"/>
-<instance part="GND13" gate="1" x="68.58" y="81.28" rot="MR0"/>
 </instances>
 <busses>
 </busses>
 <nets>
-<net name="GND" class="1">
-<segment>
-<pinref part="CLOCK" gate="G$1" pin="E"/>
-<wire x1="111.76" y1="78.74" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="GND11" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="R7" gate="G$1" pin="1"/>
-<wire x1="88.9" y1="78.74" x2="88.9" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="GND12" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="CLK_IN" gate="G$1" pin="SLEEVE"/>
-<wire x1="66.04" y1="86.36" x2="68.58" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="68.58" y1="86.36" x2="68.58" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="GND13" gate="1" pin="GND"/>
-</segment>
-</net>
 <net name="5V" class="1">
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
-<pinref part="SUPPLY9" gate="+5V" pin="+5V"/>
 <wire x1="111.76" y1="121.92" x2="111.76" y2="119.38" width="0.1524" layer="91"/>
+<label x="111.76" y="121.92" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CLK_IN" class="0">
@@ -18207,6 +18136,24 @@ Based on the following sources:
 <pinref part="R6" gate="G$1" pin="2"/>
 <pinref part="CLK_IN" gate="G$1" pin="TIP"/>
 <wire x1="66.04" y1="91.44" x2="73.66" y2="91.44" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="GND" class="1">
+<segment>
+<pinref part="CLOCK" gate="G$1" pin="E"/>
+<wire x1="111.76" y1="78.74" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
+<label x="111.76" y="76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R7" gate="G$1" pin="1"/>
+<wire x1="88.9" y1="78.74" x2="88.9" y2="76.2" width="0.1524" layer="91"/>
+<label x="88.9" y="76.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="CLK_IN" gate="G$1" pin="SLEEVE"/>
+<wire x1="66.04" y1="86.36" x2="68.58" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="86.36" x2="68.58" y2="83.82" width="0.1524" layer="91"/>
+<label x="68.58" y="83.82" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
