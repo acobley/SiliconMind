@@ -14746,40 +14746,6 @@ Pin rows are offset 5mm as well
 </library>
 <library name="GMSN">
 <packages>
-<package name="PJ302M">
-<description>Library part for the PJ302M horizontal / right angled mount 3.5 mm jack socket available from Thonk.co.uk among others.</description>
-<pad name="GND" x="2.5" y="0" drill="2.3" diameter="3.3" shape="octagon" rot="R270"/>
-<pad name="SW" x="13.5" y="-5.2" drill="2.3" diameter="3.3" shape="octagon"/>
-<pad name="TIP" x="15.7" y="0.2" drill="2.3" diameter="3.3" shape="octagon" rot="R90"/>
-<text x="0" y="5.5" size="1.27" layer="25">&gt;NAME</text>
-<wire x1="15.5" y1="-5" x2="0" y2="-5" width="0.127" layer="51"/>
-<wire x1="0" y1="-5" x2="0" y2="-3" width="0.127" layer="51"/>
-<wire x1="0" y1="-3" x2="0" y2="3" width="0.127" layer="51"/>
-<wire x1="0" y1="3" x2="0" y2="5" width="0.127" layer="51"/>
-<wire x1="0" y1="5" x2="15.5" y2="5" width="0.127" layer="51"/>
-<wire x1="15.5" y1="5" x2="15.5" y2="-5" width="0.127" layer="51"/>
-<wire x1="0" y1="3" x2="-0.5" y2="3" width="0.127" layer="51"/>
-<wire x1="-0.5" y1="3" x2="-1" y2="3" width="0.127" layer="51"/>
-<wire x1="-1" y1="3" x2="-1.5" y2="3" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="3" x2="-2" y2="3" width="0.127" layer="51"/>
-<wire x1="-2" y1="3" x2="-2.5" y2="3" width="0.127" layer="51"/>
-<wire x1="-3.5" y1="2.5" x2="-3.5" y2="-2.5" width="0.127" layer="51"/>
-<wire x1="-2" y1="-3" x2="-1.5" y2="-3" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="-3" x2="-1" y2="-3" width="0.127" layer="51"/>
-<wire x1="-1" y1="-3" x2="-0.5" y2="-3" width="0.127" layer="51"/>
-<wire x1="-0.5" y1="-3" x2="0" y2="-3" width="0.127" layer="51"/>
-<wire x1="0" y1="-3" x2="-0.5" y2="3" width="0.127" layer="51"/>
-<wire x1="-0.5" y1="-3" x2="-1" y2="3" width="0.127" layer="51"/>
-<wire x1="-1" y1="-3" x2="-1.5" y2="3" width="0.127" layer="51"/>
-<wire x1="-1.5" y1="-3" x2="-2" y2="3" width="0.127" layer="51"/>
-<wire x1="-2" y1="-3" x2="-2.5" y2="3" width="0.127" layer="51"/>
-<wire x1="-2.5" y1="3" x2="-3" y2="3" width="0.127" layer="51"/>
-<wire x1="-2" y1="-3" x2="-2.5" y2="-3" width="0.127" layer="51"/>
-<wire x1="-2.5" y1="-3" x2="-3" y2="-3" width="0.127" layer="51"/>
-<wire x1="-2.5" y1="-3" x2="-3" y2="3" width="0.127" layer="51"/>
-<wire x1="-3.5" y1="2.5" x2="-3" y2="3" width="0.127" layer="51" curve="-90"/>
-<wire x1="-3" y1="-3" x2="-3.5" y2="-2.5" width="0.127" layer="51" curve="-90"/>
-</package>
 <package name="POT">
 <circle x="0" y="0" radius="2.83980625" width="0.127" layer="21"/>
 <circle x="0" y="0" radius="2.409653125" width="0.127" layer="21"/>
@@ -14819,23 +14785,6 @@ Pin rows are offset 5mm as well
 </package>
 </packages>
 <symbols>
-<symbol name="PJ302M">
-<description>Library part for the PJ302M horizontal / right angled mount 3.5 mm jack socket available from Thonk.co.uk among others.</description>
-<wire x1="-2.54" y1="2.54" x2="0" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="2.54" x2="1.524" y2="1.016" width="0.1524" layer="94"/>
-<wire x1="1.524" y1="1.016" x2="2.286" y2="1.778" width="0.1524" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-0.762" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.762" y1="0" x2="-0.762" y2="2.286" width="0.1524" layer="94"/>
-<wire x1="-0.762" y1="2.286" x2="-1.016" y2="1.524" width="0.254" layer="94"/>
-<wire x1="-1.016" y1="1.524" x2="-0.508" y2="1.524" width="0.254" layer="94"/>
-<wire x1="-0.508" y1="1.524" x2="-0.762" y2="2.286" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="-2.54" x2="4.572" y2="-2.54" width="0.1524" layer="94"/>
-<text x="-2.54" y="4.064" size="1.778" layer="95">&gt;NAME</text>
-<rectangle x1="2.286" y1="-0.508" x2="7.874" y2="0.508" layer="94" rot="R90"/>
-<pin name="SLEEVE" x="-5.08" y="-2.54" visible="off" length="short" direction="pas"/>
-<pin name="TIP" x="-5.08" y="2.54" visible="off" length="short" direction="pas"/>
-<pin name="SWITCH" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
-</symbol>
 <symbol name="9MMPOT">
 <wire x1="2.54" y1="0.762" x2="-2.54" y2="0.762" width="0.254" layer="94"/>
 <wire x1="-2.54" y1="-0.762" x2="2.54" y2="-0.762" width="0.254" layer="94"/>
@@ -14857,24 +14806,6 @@ Pin rows are offset 5mm as well
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="PJ302M">
-<description>PJ302M horizontal / right angled mount 3.5 mm jack socket</description>
-<gates>
-<gate name="G$1" symbol="PJ302M" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="PJ302M">
-<connects>
-<connect gate="G$1" pin="SLEEVE" pad="GND"/>
-<connect gate="G$1" pin="SWITCH" pad="SW"/>
-<connect gate="G$1" pin="TIP" pad="TIP"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="9MMPOT" prefix="VR">
 <gates>
 <gate name="G$1" symbol="9MMPOT" x="0" y="0"/>
@@ -14931,6 +14862,28 @@ Pin rows are offset 5mm as well
 <wire x1="1.5" y1="0.65" x2="0.6096" y2="0.65" width="0.1524" layer="21"/>
 <wire x1="-1.5" y1="0.65" x2="-1.5" y2="-0.1016" width="0.1524" layer="21"/>
 <wire x1="-0.4064" y1="-0.65" x2="0.4064" y2="-0.65" width="0.1524" layer="21"/>
+</package>
+<package name="S_JACK">
+<circle x="0" y="0" radius="3.162275" width="0.127" layer="21"/>
+<circle x="0" y="0" radius="2.690721875" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="6" x2="-1.5" y2="6" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="6" x2="1.5" y2="6" width="0.127" layer="21"/>
+<wire x1="1.5" y1="6" x2="4.5" y2="6" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="6" x2="-4.5" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="-4.5" y1="-4.5" x2="0.2" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="0.2" y1="-4.5" x2="4.5" y2="-4.5" width="0.127" layer="21"/>
+<wire x1="4.5" y1="-4.5" x2="4.5" y2="6" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="6" x2="-1.5" y2="4" width="0.127" layer="21"/>
+<wire x1="-1.5" y1="4" x2="1.5" y2="4" width="0.127" layer="21"/>
+<wire x1="1.5" y1="4" x2="1.5" y2="6" width="0.127" layer="21"/>
+<wire x1="-0.2" y1="-4.6" x2="-0.2" y2="-6.7" width="0.127" layer="21"/>
+<wire x1="-0.2" y1="-6.7" x2="0.2" y2="-6.7" width="0.127" layer="21"/>
+<wire x1="0.2" y1="-6.7" x2="0.2" y2="-4.5" width="0.127" layer="21"/>
+<rectangle x1="-1.27" y1="-1.27" x2="1.27" y2="1.27" layer="41"/>
+<pad name="GND" x="0" y="-6.5" drill="1.1"/>
+<pad name="NORM" x="0" y="-3.5" drill="1.1"/>
+<pad name="TIP" x="0" y="5" drill="1.1" thermals="no"/>
+<text x="-4.7498" y="-4.4704" size="1.27" layer="21" rot="R90">&gt;NAME</text>
 </package>
 </packages>
 <symbols>
@@ -15003,6 +14956,23 @@ Pin rows are offset 5mm as well
 <vertex x="-3.302" y="-1.27"/>
 </polygon>
 </symbol>
+<symbol name="S_JACK">
+<rectangle x1="2.286" y1="-0.508" x2="7.874" y2="0.508" layer="94" rot="R90"/>
+<wire x1="-2.54" y1="2.54" x2="0" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="2.54" x2="1.524" y2="1.016" width="0.1524" layer="94"/>
+<wire x1="1.524" y1="1.016" x2="2.286" y2="1.778" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-0.762" y2="0" width="0.1524" layer="94"/>
+<wire x1="-0.762" y1="0" x2="-0.762" y2="2.286" width="0.1524" layer="94"/>
+<wire x1="-0.762" y1="2.286" x2="-1.016" y2="1.524" width="0.254" layer="94"/>
+<wire x1="-1.016" y1="1.524" x2="-0.508" y2="1.524" width="0.254" layer="94"/>
+<wire x1="-0.508" y1="1.524" x2="-0.762" y2="2.286" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="4.572" y2="-2.54" width="0.1524" layer="94"/>
+<pin name="GND" x="-5.08" y="-2.54" visible="pad" length="short" direction="pas"/>
+<pin name="NORM" x="-5.08" y="0" visible="pad" length="short" direction="pas"/>
+<pin name="TIP" x="-5.08" y="2.54" visible="pad" length="short" direction="pas"/>
+<text x="-2.54" y="4.064" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-6.096" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="PB6149L-5">
@@ -15036,6 +15006,23 @@ Pin rows are offset 5mm as well
 <connect gate="G$1" pin="B" pad="B"/>
 <connect gate="G$1" pin="C" pad="C"/>
 <connect gate="G$1" pin="E" pad="E"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="S_JACK">
+<gates>
+<gate name="G$1" symbol="S_JACK" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="S_JACK">
+<connects>
+<connect gate="G$1" pin="GND" pad="GND"/>
+<connect gate="G$1" pin="NORM" pad="NORM"/>
+<connect gate="G$1" pin="TIP" pad="TIP"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -16260,14 +16247,14 @@ Based on the following sources:
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
-<class number="1" name="Power" width="0.8" drill="0">
+<class number="1" name="Power" width="0.6096" drill="0">
 </class>
 </classes>
 <parts>
 <part name="ISP1" library="adafruit" deviceset="AVRISP" device="-6"/>
 <part name="C4" library="rcl" deviceset="CPOL-US" device="153CLV-0505" value="10u"/>
-<part name="CV1" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
-<part name="TRIG1" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
+<part name="CV1" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
+<part name="TRIG1" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="R15" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="R16" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="R17" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
@@ -16279,13 +16266,13 @@ Based on the following sources:
 <part name="U$4" library="SparkFun-Connectors" deviceset="CONN_10X2" device="" value="KeyBoard Connector">
 <attribute name="RS-PART" value="669-5364"/>
 </part>
-<part name="TRIG2" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
-<part name="TRIG3" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
-<part name="TRIG4" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
+<part name="TRIG2" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
+<part name="TRIG3" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
+<part name="TRIG4" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="MCP6004-V" library="GMSN-R2Project" deviceset="MCP6004" device="D" value="MCP6004D"/>
-<part name="CV2" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
-<part name="CV3" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
-<part name="CV4" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
+<part name="CV2" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
+<part name="CV3" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
+<part name="CV4" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="C6" library="rcl" deviceset="C-US" device="C0805K" value="10u"/>
 <part name="C11" library="rcl" deviceset="C-US" device="C0805K" value="100n"/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="USB" device="PTH" value="USB-B"/>
@@ -16310,7 +16297,7 @@ Based on the following sources:
 <part name="R5" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="R6" library="rcl" deviceset="R-US_" device="R0805" value="100K"/>
 <part name="R7" library="rcl" deviceset="R-US_" device="R0805" value="1M"/>
-<part name="CLK_IN" library="GMSN" deviceset="PJ302M" device="" value="PJ302M"/>
+<part name="CLK_IN" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="REF" library="GMSN-R2Project" deviceset="LM4040A30IDBZT" device="" value="LM4040">
 <attribute name="MPN" value="LM4040A30IDBZT"/>
 <attribute name="RS-PART" value="809-6343"/>
@@ -16392,7 +16379,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="GND"/>
 <wire x1="78.74" y1="68.58" x2="81.28" y2="68.58" width="0.1524" layer="91"/>
@@ -16556,7 +16543,7 @@ Based on the following sources:
 <label x="147.32" y="91.44" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="ISP1" gate="G$1" pin="VCC"/>
 <wire x1="78.74" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
@@ -17014,7 +17001,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="JP2" gate="G$1" pin="VBUS"/>
 <wire x1="27.94" y1="40.64" x2="33.02" y2="40.64" width="0.1524" layer="91"/>
@@ -17031,7 +17018,7 @@ Based on the following sources:
 <label x="119.38" y="68.58" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="JP2" gate="G$1" pin="GND"/>
 <pinref part="C4" gate="G$1" pin="-"/>
@@ -17325,7 +17312,7 @@ Based on the following sources:
 <pinref part="R13" gate="G$1" pin="2"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="20.32" y1="10.16" x2="20.32" y2="12.7" width="0.1524" layer="91"/>
@@ -17429,7 +17416,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="MCP6004-TRIG" gate="P" pin="V-"/>
 <wire x1="119.38" y1="22.86" x2="119.38" y2="17.78" width="0.1524" layer="91"/>
@@ -17441,25 +17428,25 @@ Based on the following sources:
 <label x="119.38" y="12.7" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="TRIG2" gate="G$1" pin="SLEEVE"/>
+<pinref part="TRIG2" gate="G$1" pin="GND"/>
 <wire x1="91.44" y1="96.52" x2="88.9" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="96.52" x2="88.9" y2="93.98" width="0.1524" layer="91"/>
 <label x="88.9" y="93.98" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="TRIG1" gate="G$1" pin="SLEEVE"/>
+<pinref part="TRIG1" gate="G$1" pin="GND"/>
 <wire x1="91.44" y1="53.34" x2="88.9" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="53.34" x2="88.9" y2="50.8" width="0.1524" layer="91"/>
 <label x="88.9" y="50.8" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="TRIG4" gate="G$1" pin="SLEEVE"/>
+<pinref part="TRIG4" gate="G$1" pin="GND"/>
 <wire x1="200.66" y1="96.52" x2="198.12" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="198.12" y1="96.52" x2="198.12" y2="93.98" width="0.1524" layer="91"/>
 <label x="198.12" y="93.98" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="TRIG3" gate="G$1" pin="SLEEVE"/>
+<pinref part="TRIG3" gate="G$1" pin="GND"/>
 <wire x1="200.66" y1="50.8" x2="198.12" y2="50.8" width="0.1524" layer="91"/>
 <wire x1="198.12" y1="50.8" x2="198.12" y2="48.26" width="0.1524" layer="91"/>
 <label x="198.12" y="48.26" size="1.778" layer="95" rot="R180"/>
@@ -17497,7 +17484,7 @@ Based on the following sources:
 <pinref part="MCP6004-TRIG" gate="A" pin="+IN"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="C3" gate="G$1" pin="1"/>
 <pinref part="MCP6004-TRIG" gate="P" pin="V+"/>
@@ -17607,7 +17594,7 @@ Based on the following sources:
 <label x="10.16" y="25.4" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="27.94" y1="-10.16" x2="27.94" y2="-7.62" width="0.1524" layer="91"/>
@@ -17764,25 +17751,25 @@ Based on the following sources:
 <junction x="147.32" y="104.14"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
-<pinref part="CV4" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV4" gate="G$1" pin="GND"/>
 <wire x1="157.48" y1="2.54" x2="154.94" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="154.94" y1="2.54" x2="154.94" y2="-7.62" width="0.1524" layer="91"/>
 <label x="154.94" y="-7.62" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="CV3" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV3" gate="G$1" pin="GND"/>
 <wire x1="157.48" y1="53.34" x2="157.48" y2="40.64" width="0.1524" layer="91"/>
 <label x="157.48" y="40.64" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="CV2" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV2" gate="G$1" pin="GND"/>
 <wire x1="157.48" y1="99.06" x2="157.48" y2="86.36" width="0.1524" layer="91"/>
 <label x="157.48" y="86.36" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<pinref part="CV1" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV1" gate="G$1" pin="GND"/>
 <wire x1="160.02" y1="137.16" x2="160.02" y2="124.46" width="0.1524" layer="91"/>
 <label x="160.02" y="124.46" size="1.778" layer="95" rot="R180"/>
 </segment>
@@ -17909,7 +17896,7 @@ Based on the following sources:
 <label x="2.54" y="35.56" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="GLIDE1" gate="G$1" pin="3"/>
 <wire x1="12.7" y1="27.94" x2="12.7" y2="30.48" width="0.1524" layer="91"/>
@@ -17967,7 +17954,7 @@ Based on the following sources:
 <label x="76.2" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="GLIDE1" gate="G$1" pin="1"/>
 <wire x1="12.7" y1="43.18" x2="12.7" y2="40.64" width="0.1524" layer="91"/>
@@ -18102,7 +18089,7 @@ Based on the following sources:
 <busses>
 </busses>
 <nets>
-<net name="5V" class="0">
+<net name="5V" class="1">
 <segment>
 <pinref part="R5" gate="G$1" pin="2"/>
 <wire x1="111.76" y1="121.92" x2="111.76" y2="119.38" width="0.1524" layer="91"/>
@@ -18138,7 +18125,7 @@ Based on the following sources:
 <wire x1="66.04" y1="91.44" x2="73.66" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="GND" class="0">
+<net name="GND" class="1">
 <segment>
 <pinref part="CLOCK" gate="G$1" pin="E"/>
 <wire x1="111.76" y1="78.74" x2="111.76" y2="76.2" width="0.1524" layer="91"/>
@@ -18150,7 +18137,7 @@ Based on the following sources:
 <label x="88.9" y="76.2" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="CLK_IN" gate="G$1" pin="SLEEVE"/>
+<pinref part="CLK_IN" gate="G$1" pin="GND"/>
 <wire x1="66.04" y1="86.36" x2="68.58" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="68.58" y1="86.36" x2="68.58" y2="83.82" width="0.1524" layer="91"/>
 <label x="68.58" y="83.82" size="1.778" layer="95"/>
