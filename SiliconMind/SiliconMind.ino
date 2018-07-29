@@ -26,7 +26,7 @@ int But2 = 7;
 boolean But1State = false;
 boolean But2State = false;
 int RecordMode = NONE;
-
+int LowKeyOffset=0;
 int mode = POLY;
 int DAIN = A1;
 float PortRate = 0.25; //Initial Portemantau rate
@@ -131,7 +131,7 @@ void HandleClock() {
       hKey = SequenceNotes[CurrentSequenceNum];
       hOctave = (byte)(hKey / 12);
       hNote = (byte)(hKey % 12);
-      houtValue = (int)(Range * (hOctave + (float)hNote / 12));
+      houtValue = (int)(Range * (hOctave + (float)hNote / 12))+LowKeyOffset;
       digitalWrite(GateOut[0], SequenceGates[CurrentSequenceNum]);
       mcpWrite(houtValue, 0, 0); //Send the value to the  DAC
       CurrentSequenceNum++;
@@ -250,9 +250,7 @@ void AssignMonoVoices() {
   //Which KeyPressed location are they
   //for each unassigned note find a location for it.
   int CurrentFinger = 0;
-  //if (RecordMode == PLAY) {
-  //  CurrentFinger = 1;
-  //}
+
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = ScannedKeys[i];
@@ -446,8 +444,11 @@ void WriteNotesOut() {
       } else {
         
         if (Key <= SPLITKEY) {
-          digitalWrite(GateOut[0], true);
-          mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
+          LowKeyOffset=outValue;
+          if (RecordMode!=PLAY){
+             digitalWrite(GateOut[0], true);
+             mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
+          }
         } else {
           digitalWrite(GateOut[1], true);
           mcpWrite(CurrentOutValue[CurrentFinger], 0, 1); //Send the value to the  Out 1
@@ -466,8 +467,9 @@ void WriteNotesOut() {
 
       } else {
         if ((Key <= SPLITKEY) && (Key >=0)){
-
-          digitalWrite(GateOut[0], false);
+          if (RecordMode!=PLAY){
+             digitalWrite(GateOut[0], false);
+          }
         }
         if ((Key > SPLITKEY) && (Key >=0)){
           digitalWrite(GateOut[1], false);
