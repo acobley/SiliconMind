@@ -24,9 +24,8 @@ PureKeys aec-pcb3-inProgress AEC Current design in progress
 ------------------------------------------------
 
 
-
-TBD 
-Move to SMD IC's
+29/7/2018 Move to SMD IC's
+29/7/2018 Changed to vertical sockets.
 
 
 
