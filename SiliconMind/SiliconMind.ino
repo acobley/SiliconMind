@@ -250,9 +250,9 @@ void AssignMonoVoices() {
   //Which KeyPressed location are they
   //for each unassigned note find a location for it.
   int CurrentFinger = 0;
-  if (RecordMode == PLAY) {
-    CurrentFinger = 1;
-  }
+  //if (RecordMode == PLAY) {
+  //  CurrentFinger = 1;
+  //}
   int Key = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = ScannedKeys[i];
@@ -405,12 +405,16 @@ void WriteNotesOut() {
 
   int CurrentFinger = 0;
   int Key = -1;
-  for (int i = 0; i < CurrentPoly; i++) { //Write gate and voltage
-
-    if ((RecordMode == PLAY) && (i == 0)) {//step over the sequenced note.
-      i++;
+  int PlayOffset=0;
+  int MaxLoop=CurrentPoly;
+  if (RecordMode == PLAY) {//step over the sequenced note.
+      PlayOffset=1;
+      MaxLoop=CurrentPoly+PlayOffset;
+      if (MaxLoop>MaxPoly)
+         MaxLoop=MaxPoly;
     }
-
+    
+  for (int i = 0; i < MaxLoop; i++) { //Write gate and voltage
     CurrentFinger = i;
     Key = AssignedKeyPressed[CurrentFinger];
     if (Key != -1) {
@@ -419,9 +423,7 @@ void WriteNotesOut() {
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
       digitalWrite(ButLED1, HIGH);
-      /* Most of this deals with Portemantau
-
-        */
+      /* Most of this deals with Portamento   */
         CurrentTarget[CurrentFinger] = outValue;
         int delta = outValue - CurrentOutValue[CurrentFinger];
         int Sign = 1;
@@ -438,9 +440,9 @@ void WriteNotesOut() {
         }
       if ( mode != SPLIT) {
         
-        mcpWrite(CurrentOutValue[CurrentFinger], CurrentFinger / 2, CurrentFinger & 0x01); //Send the value to the  DAC
-        digitalWrite(GateOut[CurrentFinger], true);
-        CurrentGates[CurrentFinger] = true;
+        mcpWrite(CurrentOutValue[CurrentFinger], (CurrentFinger+PlayOffset) / 2, (CurrentFinger+PlayOffset) & 0x01); //Send the value to the  DAC
+        digitalWrite(GateOut[CurrentFinger+PlayOffset], true);
+        CurrentGates[CurrentFinger+PlayOffset] = true;
       } else {
         
         if (Key <= SPLITKEY) {
@@ -457,10 +459,10 @@ void WriteNotesOut() {
 
     else {
       Key= LastKeys[CurrentFinger];
-      CurrentGates[CurrentFinger] = false;
+      CurrentGates[CurrentFinger+PlayOffset] = false;
       digitalWrite(ButLED1, LOW);
       if ( mode != SPLIT) {
-        digitalWrite(GateOut[CurrentFinger], false);
+        digitalWrite(GateOut[CurrentFinger+PlayOffset], false);
 
       } else {
         if ((Key <= SPLITKEY) && (Key >=0)){
@@ -488,7 +490,7 @@ void mcpWrite(int value, int DAC, int Channel) {
   else
     data = data | B10110000; //DACB Bit 15 High
 
-  cli();
+  cli(); //Disable Interupts
   digitalWrite(DACS[DAC], LOW);
   SPI.transfer(data);
   data = value;
