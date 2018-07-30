@@ -1,6 +1,10 @@
 Pure Keys - Design from GMSN
-Pure Keys AEC First design form AEC
+Pure Keys AEC First design from AEC
 PureKeys aec-pcb1   AEC design First board ordered Order ID G136226 10/2/2018
+PureKeys aec-pcb2   AEC design board ordered Order ID G145482 21/3/2018
+PureKeys aec-pcb3   AEC SMD design Board Ordered Order ID G180605 30/7/2018
+
+
 
 15/3/2018  Changed 74238 to 74138
 20/3/2018  Changed back to L74238
@@ -18,7 +22,6 @@ aec-pcb2-inProgress Change Log
 20/3/2018  Changed back to L74238
 20/3/2018  pull down 1K on MK0-Mk4
 
-PureKeys aec-pcb2   AEC design First board ordered Order ID G145482 21/3/2018
 
 PureKeys aec-pcb3-inProgress AEC Current design in progress 
 ------------------------------------------------
