@@ -448,6 +448,8 @@ void WriteNotesOut() {
           if (RecordMode!=PLAY){
              digitalWrite(GateOut[0], true);
              mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
+          }else { //We are going to send the value to out 4 as well so the base note is available as well as a sequenced note
+             mcpWrite(outValue, 1, 1); //Send the value to the  Out 4
           }
         } else {
           digitalWrite(GateOut[1], true);
