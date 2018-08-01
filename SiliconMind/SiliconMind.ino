@@ -14,7 +14,7 @@ int SPLITKEY = 16;
 const byte GateInInterrupt = 2;
 boolean LedState = false;
 
-int CurrentPoly = 4;
+
 int DACS[2] = {10, 9};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
@@ -28,6 +28,7 @@ boolean But2State = false;
 int RecordMode = NONE;
 int LowKeyOffset=0;
 int mode = POLY;
+int CurrentPoly = 4;
 int DAIN = A1;
 float PortRate = 0.25; //Initial Portemantau rate
 float Range = 1365.333; // (2^12/3)
@@ -161,6 +162,9 @@ void FlashLeds() {
       LedFlashCount1 = 0;
   } else {
     digitalWrite(ButLED1, LOW);
+    if (RecordMode == PLAY) {
+       digitalWrite(GateOut[0],false); //Take the gate into a low state.
+    }
   }
   if (LedFlashCount2 != 0) {
     digitalWrite(ButLED2, HIGH);
@@ -235,9 +239,13 @@ void loop() {
   getPortRate();
   getRecordMode();
   ScanKeyboard();
-  if (mode != POLY) {
+  if (mode == MONO) {
     AssignMonoVoices();
-  } else {
+  } 
+   if (mode == SPLIT) {
+    AssignSplitVoices();
+  } 
+  if (mode == POLY){
     AssignVoices();
   }
   WriteNotesOut();
@@ -262,6 +270,26 @@ void AssignMonoVoices() {
   }
 }
 
+void AssignSplitVoices() {
+  //Find notes this time the same as last and keep a list
+  //Which KeyPressed location are they
+  //for each unassigned note find a location for it.
+  int Key = -1;
+  if (RecordMode != PLAY) {
+     AssignedKeyPressed[0]=-1;
+  }
+  AssignedKeyPressed[1]=-1;
+  for (int i = 0; i < CurrentPoly; i++) { //Assign voices
+    Key = ScannedKeys[i];
+    if ((Key <= SPLITKEY) && (Key>=0)){
+      AssignedKeyPressed[0] = Key;       //Record this Key
+      
+    }
+    if (Key > SPLITKEY){
+      AssignedKeyPressed[1] = Key;       //Record this Key
+    }
+  }
+}
 
 //This is for polyphonic mode
 
