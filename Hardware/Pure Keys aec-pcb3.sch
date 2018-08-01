@@ -16269,17 +16269,23 @@ Based on the following sources:
 <part name="TRIG2" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="TRIG3" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="TRIG4" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
-<part name="MCP6004-V" library="GMSN-R2Project" deviceset="MCP6004" device="D" value="MCP6004D"/>
+<part name="MCP6004-V" library="GMSN-R2Project" deviceset="MCP6004" device="D" value="MCP6004D">
+<attribute name="RS-PART" value="628-3481 (10)"/>
+</part>
 <part name="CV2" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="CV3" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="CV4" library="INSTRUO" deviceset="S_JACK" device="" value="S_JACK"/>
 <part name="C6" library="rcl" deviceset="C-US" device="C0805K" value="10u"/>
 <part name="C11" library="rcl" deviceset="C-US" device="C0805K" value="100n"/>
 <part name="JP2" library="SparkFun-Connectors" deviceset="USB" device="PTH" value="USB-B"/>
-<part name="MCP6004-TRIG" library="GMSN-R2Project" deviceset="MCP6004" device="D" value="MCP6004D"/>
+<part name="MCP6004-TRIG" library="GMSN-R2Project" deviceset="MCP6004" device="D" value="MCP6004D">
+<attribute name="RS-PART" value="628-3481 (10)"/>
+</part>
 <part name="C3" library="rcl" deviceset="C-US" device="C0805K" value="100n"/>
 <part name="C5" library="rcl" deviceset="C-US" device="C0805K" value="100n"/>
-<part name="MCP4922" library="GMSN-R2Project" deviceset="MCP4922" device="MCP4922-SO14" value="MCP4922MCP4922-SO14"/>
+<part name="MCP4922" library="GMSN-R2Project" deviceset="MCP4922" device="MCP4922-SO14" value="MCP4922MCP4922-SO14">
+<attribute name="RS-PART" value="402-910 "/>
+</part>
 <part name="MCP4922-2" library="GMSN-R2Project" deviceset="MCP4922" device="MCP4922-SO14" value="MCP4922MCP4922-SO14"/>
 <part name="C7" library="rcl" deviceset="C-US" device="C0805K" value="10u"/>
 <part name="C8" library="rcl" deviceset="C-US" device="C0805K" value="100n"/>
@@ -16293,7 +16299,9 @@ Based on the following sources:
 <part name="R56" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
 <part name="BUT2" library="INSTRUO" deviceset="PB6149L-5" device=""/>
 <part name="R2" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
-<part name="CLOCK" library="INSTRUO" deviceset="TRANSISTOR_MMBT3904" device="" value="2N3904"/>
+<part name="CLOCK" library="INSTRUO" deviceset="TRANSISTOR_MMBT3904" device="" value="2N3904">
+<attribute name="RS-PART" value="725-8616 "/>
+</part>
 <part name="R5" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="R6" library="rcl" deviceset="R-US_" device="R0805" value="100K"/>
 <part name="R7" library="rcl" deviceset="R-US_" device="R0805" value="1M"/>
@@ -16323,13 +16331,19 @@ Based on the following sources:
 <part name="R13" library="rcl" deviceset="R-US_" device="R0805" value="1K">
 <attribute name="RS-PART" value="223-0427"/>
 </part>
-<part name="U1" library="SparkFun-IC-Microcontroller" deviceset="ATMEGA328P_TQFP" device="" value="ATMEGA328P_TQFP"/>
-<part name="74151-1" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*151" device="D" package3d_urn="urn:adsk.eagle:package:2010/1" technology="S"/>
+<part name="U1" library="SparkFun-IC-Microcontroller" deviceset="ATMEGA328P_TQFP" device="" value="ATMEGA328P_TQFP">
+<attribute name="RS-PART" value="131-0271"/>
+</part>
+<part name="74151-1" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*151" device="D" package3d_urn="urn:adsk.eagle:package:2010/1" technology="S">
+<attribute name="RS-PART" value="436-7436"/>
+</part>
 <part name="GATE" library="GMSN" deviceset="9MMPOT" device="" value="rate"/>
 <part name="BUT3" library="INSTRUO" deviceset="PB6149L-5" device=""/>
 <part name="R14" library="rcl" deviceset="R-US_" device="R0805" value="330R"/>
 <part name="R23" library="rcl" deviceset="R-US_" device="R0805" value="100K"/>
-<part name="75151-2" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*151" device="D" package3d_urn="urn:adsk.eagle:package:2010/1" technology="S"/>
+<part name="75151-2" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*151" device="D" package3d_urn="urn:adsk.eagle:package:2010/1" technology="S">
+<attribute name="RS-PART" value="436-7436"/>
+</part>
 <part name="R24" library="rcl" deviceset="R-US_" device="R0805" value="1K">
 <attribute name="RS-PART" value="223-0427"/>
 </part>
@@ -16345,9 +16359,13 @@ Based on the following sources:
 <part name="R28" library="rcl" deviceset="R-US_" device="R0805" value="1K">
 <attribute name="RS-PART" value="223-0427"/>
 </part>
-<part name="74238" library="GMSN-R2Project" deviceset="74HC238D" device="N"/>
+<part name="74238" library="GMSN-R2Project" deviceset="74HC238D" device="N">
+<attribute name="RS-PART" value="483-6487 (10off)"/>
+</part>
 <part name="R29" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
-<part name="INVERTOR" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*04" device="D" package3d_urn="urn:adsk.eagle:package:1010/2" technology="AC"/>
+<part name="INVERTOR" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*04" device="D" package3d_urn="urn:adsk.eagle:package:1010/2" technology="AC">
+<attribute name="RC-PART" value="171-3461 (50 off)"/>
+</part>
 </parts>
 <sheets>
 <sheet>
@@ -16364,16 +16382,26 @@ Based on the following sources:
 <instance part="Q2" gate="G$1" x="10.16" y="137.16" rot="R90"/>
 <instance part="C17" gate="G$1" x="0" y="142.24" rot="R270"/>
 <instance part="C18" gate="G$1" x="0" y="132.08" rot="R270"/>
-<instance part="U1" gate="U$1" x="43.18" y="134.62"/>
-<instance part="74151-1" gate="A" x="218.44" y="142.24"/>
+<instance part="U1" gate="U$1" x="43.18" y="134.62">
+<attribute name="RS-PART" x="43.18" y="134.62" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="74151-1" gate="A" x="218.44" y="142.24">
+<attribute name="RS-PART" x="218.44" y="142.24" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="74151-1" gate="P" x="256.54" y="154.94"/>
-<instance part="75151-2" gate="A" x="220.98" y="93.98"/>
+<instance part="75151-2" gate="A" x="220.98" y="93.98">
+<attribute name="RS-PART" x="220.98" y="93.98" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="75151-2" gate="P" x="259.08" y="106.68"/>
-<instance part="74238" gate="1" x="154.94" y="139.7"/>
+<instance part="74238" gate="1" x="154.94" y="139.7">
+<attribute name="RS-PART" x="154.94" y="139.7" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="74238" gate="/+UB" x="111.76" y="149.86"/>
 <instance part="74238" gate="/-UB" x="111.76" y="121.92"/>
 <instance part="R29" gate="G$1" x="114.3" y="137.16" rot="R90"/>
-<instance part="INVERTOR" gate="A" x="132.08" y="91.44"/>
+<instance part="INVERTOR" gate="A" x="132.08" y="91.44">
+<attribute name="RC-PART" x="132.08" y="91.44" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="INVERTOR" gate="P" x="165.1" y="93.98"/>
 </instances>
 <busses>
@@ -17410,7 +17438,9 @@ Based on the following sources:
 <instance part="MCP6004-TRIG" gate="C" x="53.34" y="58.42"/>
 <instance part="MCP6004-TRIG" gate="D" x="162.56" y="101.6"/>
 <instance part="MCP6004-TRIG" gate="A" x="162.56" y="55.88"/>
-<instance part="MCP6004-TRIG" gate="P" x="119.38" y="30.48"/>
+<instance part="MCP6004-TRIG" gate="P" x="119.38" y="30.48">
+<attribute name="RS-PART" x="119.38" y="30.48" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="C3" gate="G$1" x="129.54" y="35.56"/>
 </instances>
 <busses>
@@ -17552,7 +17582,9 @@ Based on the following sources:
 <instances>
 <instance part="CV1" gate="G$1" x="165.1" y="139.7"/>
 <instance part="MCP6004-V" gate="C" x="139.7" y="142.24"/>
-<instance part="MCP6004-V" gate="D" x="139.7" y="104.14"/>
+<instance part="MCP6004-V" gate="D" x="139.7" y="104.14">
+<attribute name="RS-PART" x="139.7" y="104.14" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="MCP6004-V" gate="A" x="139.7" y="58.42"/>
 <instance part="MCP6004-V" gate="B" x="139.7" y="7.62"/>
 <instance part="CV2" gate="G$1" x="162.56" y="101.6"/>
@@ -17562,7 +17594,9 @@ Based on the following sources:
 <instance part="C11" gate="G$1" x="38.1" y="-12.7"/>
 <instance part="MCP6004-V" gate="P" x="106.68" y="81.28"/>
 <instance part="C5" gate="G$1" x="114.3" y="86.36"/>
-<instance part="MCP4922" gate="G$1" x="33.02" y="119.38"/>
+<instance part="MCP4922" gate="G$1" x="33.02" y="119.38">
+<attribute name="RS-PART" x="33.02" y="119.38" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="MCP4922-2" gate="G$1" x="33.02" y="25.4"/>
 <instance part="C7" gate="G$1" x="27.94" y="81.28"/>
 <instance part="C8" gate="G$1" x="38.1" y="81.28"/>
@@ -18080,7 +18114,9 @@ Based on the following sources:
 <plain>
 </plain>
 <instances>
-<instance part="CLOCK" gate="G$1" x="106.68" y="91.44" rot="R90"/>
+<instance part="CLOCK" gate="G$1" x="106.68" y="91.44" rot="R90">
+<attribute name="RS-PART" x="106.68" y="91.44" size="1.778" layer="96" rot="R90" display="off"/>
+</instance>
 <instance part="R5" gate="G$1" x="111.76" y="114.3" rot="MR90"/>
 <instance part="R6" gate="G$1" x="78.74" y="91.44" rot="MR0"/>
 <instance part="R7" gate="G$1" x="88.9" y="83.82" rot="MR90"/>
