@@ -16364,7 +16364,7 @@ Based on the following sources:
 </part>
 <part name="R29" library="rcl" deviceset="R-US_" device="R0805" value="10K"/>
 <part name="INVERTOR" library="74xx-eu" library_urn="urn:adsk.eagle:library:85" deviceset="74*04" device="D" package3d_urn="urn:adsk.eagle:package:1010/2" technology="AC">
-<attribute name="RC-PART" value="171-3461 (50 off)"/>
+<attribute name="RS-PART" value="171-3461 (50 off)"/>
 </part>
 </parts>
 <sheets>
@@ -16400,7 +16400,7 @@ Based on the following sources:
 <instance part="74238" gate="/-UB" x="111.76" y="121.92"/>
 <instance part="R29" gate="G$1" x="114.3" y="137.16" rot="R90"/>
 <instance part="INVERTOR" gate="A" x="132.08" y="91.44">
-<attribute name="RC-PART" x="132.08" y="91.44" size="1.778" layer="96" display="off"/>
+<attribute name="RS-PART" x="132.08" y="91.44" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="INVERTOR" gate="P" x="165.1" y="93.98"/>
 </instances>
