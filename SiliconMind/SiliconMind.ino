@@ -55,8 +55,10 @@ int GateOut[MaxPoly] = {A5, 0, 1, 3};
 int MAXSEQ = 64;
 volatile int SequenceNotes[64];
 volatile int SequenceGates[64];
+volatile int SequenceGateLength[64];
 volatile int SequenceLength = 0;
 volatile int CurrentSequenceNum = 0;
+volatile int GateLengthPtr=0;
 
 
 /*
@@ -140,13 +142,16 @@ void HandleClock() {
         CurrentSequenceNum = 0;
       }
       return;
-    } else {
+    } else { // Record mode
       //digitalWrite(ButLED2, LedState);
       LedFlashCount2 = 1;
       SequenceNotes[CurrentSequenceNum] = AssignedKeyPressed[0];
       SequenceGates[CurrentSequenceNum] = CurrentGates[0];
-      SequenceLength = CurrentSequenceNum + 1;
+      SequenceGateLength[CurrentSequenceNum]=0;
+      GateLengthPtr=CurrentSequenceNum;
       CurrentSequenceNum++;
+      SequenceLength = CurrentSequenceNum ;
+      
       if (CurrentSequenceNum > MAXSEQ) {
         CurrentSequenceNum = MAXSEQ;
       }
@@ -169,7 +174,12 @@ void FlashLeds() {
   if (LedFlashCount2 != 0) {
     digitalWrite(ButLED2, HIGH);
     LedFlashCount2++;
-    if (LedFlashCount2 > 100)
+    if (RecordMode == RECORD){
+       if (AssignedKeyPressed[0] !=-1){
+          SequenceGateLength[GateLengthPtr]=LedFlashCount2;
+       }
+    }
+    if (LedFlashCount2 > SequenceGateLength[GateLengthPtr]+1) //In record mode don't turn off until key released
       LedFlashCount2 = 0;
   } else {
     digitalWrite(ButLED2, LOW);
