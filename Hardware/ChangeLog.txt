@@ -5,6 +5,17 @@ PureKeys aec-pcb2   AEC design board ordered Order ID G145482 21/3/2018
 PureKeys aec-pcb3   AEC SMD design Board Ordered Order ID G180605 30/7/2018
 
 
+PureKeys aec-pcb3 AEC
+------------------------------------------------
+Airwire between T7 and 74238
+
+PureKeys aec-pcb3-smd inProgress AEC
+------------------------------------------------
+Changed over to SMD components
+Add second 74151 for velocity detection
+
+
+
 
 15/3/2018  Changed 74238 to 74138
 20/3/2018  Changed back to L74238
