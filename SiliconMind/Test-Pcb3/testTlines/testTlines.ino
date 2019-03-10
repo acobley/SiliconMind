@@ -10,6 +10,7 @@ for (byte A=4;A<7;A++){
 void loop() {
   // put your main code here, to run repeatedly:
   WriteAdd(count);
+  //delay(100);
   count++;
   if (count >7)
      count=0;
