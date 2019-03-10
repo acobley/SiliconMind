@@ -1,6 +1,12 @@
 View this project on [CADLAB.io](https://cadlab.io/node/794). 
 
 # SiliconMind
+PCB3 is a test release.  
+**Do not use** . Unwired airwire on PCB.
+Use the hardware files
+
+Pure Keys aec-pcb3.sch
+Pure Keys aec-pcb3.brd
 
 PCB2 is a working release.  Use the hardware files
 
@@ -60,5 +66,10 @@ Pure Keys aec-pcb3-inProgress (obsolete)
 Pure Keys aec-pcb3-smd-inProgress 
 
 	SMD version.   Next design in progress
+	     	    Changes from pcb2 are rolled into this 
+Pure Keys aec-pcb3 
+
+	SMD version.   **Do not use** Unwired airwire on PCB.
+	
 	     	    Changes from pcb2 are rolled into this 
 		    
