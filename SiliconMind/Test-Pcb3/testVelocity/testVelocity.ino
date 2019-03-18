@@ -64,7 +64,6 @@ void loop() {
 
 }
 
-
 void WriteInAdd(byte address) {
 
   for (byte A = 0; A < 3; A++) {
@@ -73,6 +72,7 @@ void WriteInAdd(byte address) {
 
   }
 }
+
 void WriteLED(byte address) {
   for (byte A = 0; A < 3; A++) {
     digitalWrite(LEDS[A], (boolean)(address & 0x01));
