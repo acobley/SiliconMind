@@ -1,9 +1,9 @@
 #include "SPI.h"
 #include <EEPROM.h>
 
-#define MONO 3
+#define MONO 1
 #define SPLIT 2
-#define POLY 1
+#define POLY 3
 
 #define NONE 0
 #define PLAY 1
@@ -19,7 +19,7 @@ int DACS[2] = {10, 10};
 byte AIN[] = {A2, A3, A4};
 int ButLED1 = 8;
 int ButLED2 = 7;
-int ButLED3 =9;
+int ButLED3 = 9;
 int LEDS[3] = {8, 7, 9};
 
 volatile int LedFlashCount1 = 0;
@@ -29,7 +29,7 @@ int But2 = 7;
 boolean But1State = false;
 boolean But2State = false;
 int RecordMode = NONE;
-int LowKeyOffset=0;
+int LowKeyOffset = 0;
 int mode = POLY;
 int CurrentPoly = 4;
 int DAIN = A1;
@@ -62,12 +62,12 @@ volatile int SequenceGates[64];
 volatile int SequenceGateLength[64];
 volatile int SequenceLength = 0;
 volatile int CurrentSequenceNum = 0;
-volatile int GateLengthPtr=0;
+volatile int GateLengthPtr = 0;
 
-const int MaxCurve=250;
+const int MaxCurve = 250;
 int fCurve[MaxCurve];
-int PortPot=A6;
-int GatePot=A7;
+int PortPot = A6;
+int GatePot = A7;
 
 
 
@@ -99,7 +99,7 @@ void setup() {
     CurrentTarget[i] = 0;
     CurrentGates[i] = false;
   }
-   pinMode(DACS[0], OUTPUT);
+  pinMode(DACS[0], OUTPUT);
   pinMode(DACS[1], OUTPUT);
   digitalWrite(DACS[0], HIGH);
   digitalWrite(DACS[1], HIGH);
@@ -116,13 +116,13 @@ void setup() {
   digitalWrite(ButLED2, HIGH);
   digitalWrite(ButLED3, HIGH);
   pinMode(DAIN, INPUT);
-   pinMode(DBIN, INPUT);
+  pinMode(DBIN, INPUT);
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
   delay(500);
-   double scale = 4095.0 / pow(0.1, (-1.0 / 2.0));
+  double scale = 4095.0 / pow(0.1, (-1.0 / 2.0));
   int i = 0;
-  for (double f = 0.1; f < (MaxCurve/10.0); f = f + 0.1) {
+  for (double f = 0.1; f < (MaxCurve / 10.0); f = f + 0.1) {
     double ans = scale * pow(f, (-1.0 / 2.0));
     fCurve[i] = (int)ans;
     i++;
@@ -148,7 +148,7 @@ void HandleClock() {
       hKey = SequenceNotes[CurrentSequenceNum];
       hOctave = (byte)(hKey / 12);
       hNote = (byte)(hKey % 12);
-      houtValue = (int)(Range * (hOctave + (float)hNote / 12))+LowKeyOffset;
+      houtValue = (int)(Range * (hOctave + (float)hNote / 12)) + LowKeyOffset;
       digitalWrite(GateOut[0], SequenceGates[CurrentSequenceNum]);
       mcpWrite(houtValue, 0, 0); //Send the value to the  DAC
       CurrentSequenceNum++;
@@ -161,11 +161,11 @@ void HandleClock() {
       LedFlashCount2 = 1;
       SequenceNotes[CurrentSequenceNum] = AssignedKeyPressed[0];
       SequenceGates[CurrentSequenceNum] = CurrentGates[0];
-      SequenceGateLength[CurrentSequenceNum]=0;
-      GateLengthPtr=CurrentSequenceNum;
+      SequenceGateLength[CurrentSequenceNum] = 0;
+      GateLengthPtr = CurrentSequenceNum;
       CurrentSequenceNum++;
       SequenceLength = CurrentSequenceNum ;
-      
+
       if (CurrentSequenceNum > MAXSEQ) {
         CurrentSequenceNum = MAXSEQ;
       }
@@ -182,18 +182,18 @@ void FlashLeds() {
   } else {
     digitalWrite(ButLED1, LOW);
     if (RecordMode == PLAY) {
-       digitalWrite(GateOut[0],false); //Take the gate into a low state.
+      digitalWrite(GateOut[0], false); //Take the gate into a low state.
     }
   }
   if (LedFlashCount2 != 0) {
     digitalWrite(ButLED2, HIGH);
     LedFlashCount2++;
-    if (RecordMode == RECORD){
-       if (AssignedKeyPressed[0] !=-1){
-          SequenceGateLength[GateLengthPtr]=LedFlashCount2;
-       }
+    if (RecordMode == RECORD) {
+      if (AssignedKeyPressed[0] != -1) {
+        SequenceGateLength[GateLengthPtr] = LedFlashCount2;
+      }
     }
-    if (LedFlashCount2 > SequenceGateLength[GateLengthPtr]+1) //In record mode don't turn off until key released
+    if (LedFlashCount2 > SequenceGateLength[GateLengthPtr] + 1) //In record mode don't turn off until key released
       LedFlashCount2 = 0;
   } else {
     digitalWrite(ButLED2, LOW);
@@ -241,8 +241,8 @@ void SetPolyMode() {
   if ((But1State == false) && (State == true)) {
     //Change the mode
     mode++;
-    if (mode > MONO) {
-      mode = POLY;
+    if (mode > POLY) {
+      mode = MONO;
     }
     flash(mode, ButLED1);
     if (mode == MONO)
@@ -265,11 +265,11 @@ void loop() {
   ScanKeyboard();
   if (mode == MONO) {
     AssignMonoVoices();
-  } 
-   if (mode == SPLIT) {
+  }
+  if (mode == SPLIT) {
     AssignSplitVoices();
-  } 
-  if (mode == POLY){
+  }
+  if (mode == POLY) {
     AssignVoices();
   }
   WriteNotesOut();
@@ -287,9 +287,9 @@ void AssignMonoVoices() {
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = ScannedKeys[i];
     //if (Key != -1) {
-      States[CurrentFinger] = true;
-      AssignedKeyPressed[CurrentFinger] = Key;       //Record this Key
-      CurrentFinger++;
+    States[CurrentFinger] = true;
+    AssignedKeyPressed[CurrentFinger] = Key;       //Record this Key
+    CurrentFinger++;
     //}
   }
 }
@@ -300,16 +300,16 @@ void AssignSplitVoices() {
   //for each unassigned note find a location for it.
   int Key = -1;
   if (RecordMode != PLAY) {
-     AssignedKeyPressed[0]=-1;
+    AssignedKeyPressed[0] = -1;
   }
-  AssignedKeyPressed[1]=-1;
+  AssignedKeyPressed[1] = -1;
   for (int i = 0; i < CurrentPoly; i++) { //Assign voices
     Key = ScannedKeys[i];
-    if ((Key <= SPLITKEY) && (Key>=0)){
+    if ((Key <= SPLITKEY) && (Key >= 0)) {
       AssignedKeyPressed[0] = Key;       //Record this Key
-      
+
     }
-    if (Key > SPLITKEY){
+    if (Key > SPLITKEY) {
       AssignedKeyPressed[1] = Key;       //Record this Key
     }
   }
@@ -463,44 +463,44 @@ void WriteNotesOut() {
 
   int CurrentFinger = 0;
   int Key = -1;
-  int PlayOffset=0;
-  int MaxLoop=CurrentPoly;
+  int PlayOffset = 0;
+  int MaxLoop = CurrentPoly;
   if (RecordMode == PLAY) {//step over the sequenced note.
-      PlayOffset=1;
-      MaxLoop=CurrentPoly+PlayOffset;
-      if (MaxLoop>MaxPoly)
-         MaxLoop=MaxPoly;
-    }
-    
+    PlayOffset = 1;
+    MaxLoop = CurrentPoly + PlayOffset;
+    if (MaxLoop > MaxPoly)
+      MaxLoop = MaxPoly;
+  }
+
   for (int i = 0; i < MaxLoop; i++) { //Write gate and voltage
     CurrentFinger = i;
     Key = AssignedKeyPressed[CurrentFinger];
     if (Key != -1) {
-      LastKeys[CurrentFinger]= AssignedKeyPressed[CurrentFinger];
+      LastKeys[CurrentFinger] = AssignedKeyPressed[CurrentFinger];
       Octave = (byte)(Key / 12);
       Note = (byte)(Key % 12);
       outValue = (int)(Range * (Octave + (float)Note / 12));
       digitalWrite(ButLED1, HIGH);
       /* Most of this deals with Portamento   */
-        CurrentTarget[CurrentFinger] = outValue;
-        int delta = outValue - CurrentOutValue[CurrentFinger];
-        int Sign = 1;
-        if (delta < 0)
-          Sign = -1;
-        CurrentOutValue[CurrentFinger] = CurrentOutValue[CurrentFinger] + Sign * PortRate;
-        if (Sign > 0) {
-          if (CurrentOutValue[CurrentFinger] >= CurrentTarget[CurrentFinger])
-            CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
-        }
-        else {
-          if (CurrentOutValue[CurrentFinger] <= CurrentTarget[CurrentFinger])
-            CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
-        }
+      CurrentTarget[CurrentFinger] = outValue;
+      int delta = outValue - CurrentOutValue[CurrentFinger];
+      int Sign = 1;
+      if (delta < 0)
+        Sign = -1;
+      CurrentOutValue[CurrentFinger] = CurrentOutValue[CurrentFinger] + Sign * PortRate;
+      if (Sign > 0) {
+        if (CurrentOutValue[CurrentFinger] >= CurrentTarget[CurrentFinger])
+          CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
+      }
+      else {
+        if (CurrentOutValue[CurrentFinger] <= CurrentTarget[CurrentFinger])
+          CurrentOutValue[CurrentFinger] = CurrentTarget[CurrentFinger];
+      }
       if ( mode != SPLIT) {
-        
-        mcpWrite(CurrentOutValue[CurrentFinger], (CurrentFinger+PlayOffset) / 2, (CurrentFinger+PlayOffset) & 0x01); //Send the value to the  DAC
-        digitalWrite(GateOut[CurrentFinger+PlayOffset], true);
-        CurrentGates[CurrentFinger+PlayOffset] = true;
+
+        mcpWrite(CurrentOutValue[CurrentFinger], (CurrentFinger + PlayOffset) / 2, (CurrentFinger + PlayOffset) & 0x01); //Send the value to the  DAC
+        digitalWrite(GateOut[CurrentFinger + PlayOffset], true);
+        CurrentGates[CurrentFinger + PlayOffset] = true;
         //in Mono mode, can we write to the other notes to ?
         //if ( mode == MONO) {
         //   mcpWrite(CurrentOutValue[CurrentFinger],0,1);
@@ -508,42 +508,42 @@ void WriteNotesOut() {
         //     mcpWrite(CurrentOutValue[CurrentFinger],1,1);
         //}
       } else {
-        
+
         if (Key <= SPLITKEY) {
-          LowKeyOffset=outValue;
-          if (RecordMode!=PLAY){
-             digitalWrite(GateOut[0], true);
-             mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
+          LowKeyOffset = outValue;
+          if (RecordMode != PLAY) {
+            digitalWrite(GateOut[0], true);
+            mcpWrite(outValue, 0, 0); //Send the value to the  Out 0
           } //We are going to send the value to out 4 as well so the base note is available as well as a played note
-             mcpWrite(outValue, 1, 1); //Send the value to the  Out 4
-          
+          mcpWrite(outValue, 1, 1); //Send the value to the  Out 4
+
         } else {
           digitalWrite(GateOut[1], true);
           mcpWrite(CurrentOutValue[CurrentFinger], 0, 1); //Send the value to the  Out 1
         }
-         
+
       }
 
     }
 
     else {
-      Key= LastKeys[CurrentFinger];
-      CurrentGates[CurrentFinger+PlayOffset] = false;
+      Key = LastKeys[CurrentFinger];
+      CurrentGates[CurrentFinger + PlayOffset] = false;
       digitalWrite(ButLED1, LOW);
       if ( mode != SPLIT) {
-        digitalWrite(GateOut[CurrentFinger+PlayOffset], false);
+        digitalWrite(GateOut[CurrentFinger + PlayOffset], false);
 
       } else {
-        if ((Key <= SPLITKEY) && (Key >=0)){
-          if (RecordMode!=PLAY){
-             digitalWrite(GateOut[0], false);
+        if ((Key <= SPLITKEY) && (Key >= 0)) {
+          if (RecordMode != PLAY) {
+            digitalWrite(GateOut[0], false);
           }
         }
-        if ((Key > SPLITKEY) && (Key >=0)){
+        if ((Key > SPLITKEY) && (Key >= 0)) {
           digitalWrite(GateOut[1], false);
-          }
-        
-        LastKeys[CurrentFinger]=-1;
+        }
+
+        LastKeys[CurrentFinger] = -1;
       }
     }
   }
@@ -570,7 +570,7 @@ void mcpWrite(int value, int DAC, int Channel) {
   data = value;
   SPI.transfer(data);
   // Set digital pin DACCS HIGH
-   // Set digital pin DACCS HIGH
+  // Set digital pin DACCS HIGH
 
   sei();
   if (DAC == 0)
