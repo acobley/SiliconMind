@@ -56,10 +56,10 @@ int outValue = 0;
 
 
 int GateOut[MaxPoly] = {A5, 0, 1, 3};
-int MAXSEQ = 64;
-volatile int SequenceNotes[64];
-volatile int SequenceGates[64];
-volatile int SequenceGateLength[64];
+const int MAXSEQ = 64;
+volatile int SequenceNotes[MAXSEQ];
+volatile int SequenceGates[MAXSEQ];
+volatile int SequenceGateLength[MAXSEQ];
 volatile int SequenceLength = 0;
 volatile int CurrentSequenceNum = 0;
 volatile int GateLengthPtr = 0;
@@ -68,6 +68,7 @@ const int MaxCurve = 250;
 int fCurve[MaxCurve];
 int PortPot = A6;
 int GatePot = A7;
+int GateLength=0;
 
 
 
@@ -76,6 +77,8 @@ void getPortRate() {
   float Val = (float)(analogRead(PortPot) / 1024.0);
   Val = Val * Val * Val; //Create a cubic curve
   PortRate = (float)(Val) * 250;
+
+  GateLength= analogRead(GatePot);
 
 }
 
@@ -148,7 +151,7 @@ void HandleClock() {
       hKey = SequenceNotes[CurrentSequenceNum];
       hOctave = (byte)(hKey / 12);
       hNote = (byte)(hKey % 12);
-      houtValue = (int)(Range * (hOctave + (float)hNote / 12)) + LowKeyOffset;
+      houtValue = (int)(Range * (hOctave + (float)hNote / 12))+LowKeyOffset;
       digitalWrite(GateOut[0], SequenceGates[CurrentSequenceNum]);
       mcpWrite(houtValue, 0, 0); //Send the value to the  DAC
       CurrentSequenceNum++;
@@ -156,16 +159,13 @@ void HandleClock() {
         CurrentSequenceNum = 0;
       }
       return;
-    } else { // Record mode
+    } else {
       //digitalWrite(ButLED2, LedState);
       LedFlashCount2 = 1;
       SequenceNotes[CurrentSequenceNum] = AssignedKeyPressed[0];
       SequenceGates[CurrentSequenceNum] = CurrentGates[0];
-      SequenceGateLength[CurrentSequenceNum] = 0;
-      GateLengthPtr = CurrentSequenceNum;
+      SequenceLength = CurrentSequenceNum + 1;
       CurrentSequenceNum++;
-      SequenceLength = CurrentSequenceNum ;
-
       if (CurrentSequenceNum > MAXSEQ) {
         CurrentSequenceNum = MAXSEQ;
       }
@@ -173,27 +173,23 @@ void HandleClock() {
   }
 }
 
+
 void FlashLeds() {
   if (LedFlashCount1 != 0) {
     digitalWrite(ButLED1, HIGH);
     LedFlashCount1++;
-    if (LedFlashCount1 > 100)
+    if (LedFlashCount1 > GateLength)
       LedFlashCount1 = 0;
   } else {
     digitalWrite(ButLED1, LOW);
     if (RecordMode == PLAY) {
-      digitalWrite(GateOut[0], false); //Take the gate into a low state.
+       digitalWrite(GateOut[0],false); //Take the gate into a low state.
     }
   }
   if (LedFlashCount2 != 0) {
     digitalWrite(ButLED2, HIGH);
     LedFlashCount2++;
-    if (RecordMode == RECORD) {
-      if (AssignedKeyPressed[0] != -1) {
-        SequenceGateLength[GateLengthPtr] = LedFlashCount2;
-      }
-    }
-    if (LedFlashCount2 > SequenceGateLength[GateLengthPtr] + 1) //In record mode don't turn off until key released
+    if (LedFlashCount2 > GateLength)
       LedFlashCount2 = 0;
   } else {
     digitalWrite(ButLED2, LOW);
