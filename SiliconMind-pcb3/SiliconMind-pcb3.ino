@@ -26,11 +26,13 @@ volatile int LedFlashCount1 = 0;
 volatile int LedFlashCount2 = 0;
 int But1 = 6;
 int But2 = 7;
+int But3 = 5;
 boolean But1State = false;
 boolean But2State = false;
+boolean But3State = false;
 int RecordMode = NONE;
 int LowKeyOffset = 0;
-int mode = POLY;
+int mode = MONO;
 int CurrentPoly = 4;
 int DAIN = A1;
 int DBIN = A0;
@@ -68,7 +70,7 @@ const int MaxCurve = 250;
 int fCurve[MaxCurve];
 int PortPot = A6;
 int GatePot = A7;
-int GateLength=0;
+int GateLength = 0;
 
 
 
@@ -78,7 +80,7 @@ void getPortRate() {
   Val = Val * Val * Val; //Create a cubic curve
   PortRate = (float)(Val) * 250;
 
-  GateLength= analogRead(GatePot);
+  GateLength = analogRead(GatePot);
 
 }
 
@@ -151,7 +153,7 @@ void HandleClock() {
       hKey = SequenceNotes[CurrentSequenceNum];
       hOctave = (byte)(hKey / 12);
       hNote = (byte)(hKey % 12);
-      houtValue = (int)(Range * (hOctave + (float)hNote / 12))+LowKeyOffset;
+      houtValue = (int)(Range * (hOctave + (float)hNote / 12)) + LowKeyOffset;
       digitalWrite(GateOut[0], SequenceGates[CurrentSequenceNum]);
       mcpWrite(houtValue, 0, 0); //Send the value to the  DAC
       CurrentSequenceNum++;
@@ -183,7 +185,7 @@ void FlashLeds() {
   } else {
     digitalWrite(ButLED1, LOW);
     if (RecordMode == PLAY) {
-       digitalWrite(GateOut[0],false); //Take the gate into a low state.
+      digitalWrite(GateOut[0], false); //Take the gate into a low state.
     }
   }
   if (LedFlashCount2 != 0) {
@@ -196,40 +198,34 @@ void FlashLeds() {
   }
 }
 
-int HoldCount = 0;
 void getRecordMode() {
-
-  boolean State = GetSwitchState(But2);
-  if ((But2State == false) && (State == true)) {
-    if (RecordMode == NONE) {
+  boolean State2 = GetSwitchState(But2);
+  boolean State3 = GetSwitchState(But3);
+  if ((But2State == false) && (State2 == true)) {
+    if (RecordMode != PLAY) {
       RecordMode = PLAY;
-      But2State = State; //true
+      digitalWrite(ButLED2, HIGH);
+      But2State = false; //true
       CurrentSequenceNum = 0;
     } else {
       RecordMode = NONE;
-      But2State = State;
+      
       digitalWrite(ButLED2, false);
+    }
+  }
+  if ((But3State == false) && (State3 == true)) {
+    if (RecordMode != RECORD) {
+      digitalWrite(ButLED3, HIGH);
+      RecordMode = RECORD;
+      CurrentSequenceNum = 0;
+      But3State = false; //true
+    } else {
+      RecordMode = NONE;
+      
+      digitalWrite(ButLED3, false);
       SaveEEProm();
     }
-
   }
-  if ((But2State == true) && (State == true)) {
-    HoldCount++;
-    if (HoldCount > 2000) {
-
-      RecordMode = RECORD;
-      HoldCount = 2001;
-      flash(4, ButLED2);
-      CurrentSequenceNum = 0;
-    }
-
-  }
-  if (State == false) {
-    But2State = false;
-    HoldCount = 0;
-
-  }
-
 }
 
 void SetPolyMode() {
