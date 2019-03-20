@@ -162,7 +162,7 @@ void HandleClock() {
       }
       return;
     } else {
-      //digitalWrite(ButLED2, LedState);
+      
       LedFlashCount2 = 1;
       SequenceNotes[CurrentSequenceNum] = AssignedKeyPressed[0];
       SequenceGates[CurrentSequenceNum] = CurrentGates[0];
@@ -188,14 +188,7 @@ void FlashLeds() {
       digitalWrite(GateOut[0], false); //Take the gate into a low state.
     }
   }
-  if (LedFlashCount2 != 0) {
-    digitalWrite(ButLED2, HIGH);
-    LedFlashCount2++;
-    if (LedFlashCount2 > GateLength)
-      LedFlashCount2 = 0;
-  } else {
-    digitalWrite(ButLED2, LOW);
-  }
+
 }
 
 void getRecordMode() {
@@ -209,7 +202,6 @@ void getRecordMode() {
       CurrentSequenceNum = 0;
     } else {
       RecordMode = NONE;
-      
       digitalWrite(ButLED2, false);
     }
   }
@@ -221,7 +213,6 @@ void getRecordMode() {
       But3State = false; //true
     } else {
       RecordMode = NONE;
-      
       digitalWrite(ButLED3, false);
       SaveEEProm();
     }
